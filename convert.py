@@ -13,8 +13,10 @@ def main():
 
     entries = []
     for key in bib_data.entries:
-        authors = bib_data.entries[key].persons[u'author']
-        entry = { u"key" : key, u"author" : authors }
+        persons = bib_data.entries[key].persons[u'author']
+        authors = [unicode(au) for au in persons]
+
+        entry = { u"key" : key, u"author" : ",".join(authors)}
 
         fields = bib_data.entries[key].fields
         if u'title' in fields:

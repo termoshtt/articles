@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link type="text/css" href="./css/blue/style.css" rel="stylesheet" />
+        <script src="./js/jquery-1.7.2.min.js"></script>
+        <script src="./js/jquery.tablesorter.min.js"></script>
     </head>
     <body>
+        <table border="4" align="center" id="PaperList" class="tablesorter">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Journal</th>
+                <th>Year</th>
+            </tr>
+            </thead>
         {% for entry in entries %}
-        <div id='{{entry["key"]}}' class='article_node'>
-            <a href='./pdf/{{entry["key"]}}.pdf'>{{entry["title"]}}</a>
-        </div>
+            <tr align="center">
+                <td><a href='./pdf/{{entry["key"]}}.pdf'>{{entry["title"]}}</a></td>
+                <td>{{entry["author"]}}</td>
+                <td>{{entry["journal"]}}</td>
+                <td>{{entry["year"]}}</td>
+            </tr>
         {% endfor %}
+        </table>
+        <script> $(function(){ $("#PaperList").tablesorter(); }) </script>
     </body>
 </html>
 
