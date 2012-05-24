@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- <link type="text/css" href="./css/blue/style.css" rel="stylesheet" /> -->
+        <!-- <script src="./js/jquery-1.7.2.min.js"></script> -->
+        <!-- <script src="./js/jquery.tablesorter.min.js"></script> -->
+    </head>
+    <body>
+        {% for entry in entries %}
+        <div>
+            <h4><a href='./pdf/{{entry["key"]}}.pdf'>{{entry["title"]}}</a></h4>
+            <ul>
+                <li>Author : {{entry["author"]}}</li>
+                <li>Journal: {{entry["journal"]}}</li>
+                <li>Published Year: {{entry["year"]}}</li>
+            </ul>
+        </div>
+        {% endfor %}
+    </body>
+</html>
+
