@@ -1,7 +1,6 @@
 #!/usr/bin/python2
 # coding=utf-8
 
-
 import sys
 from pybtex.database.input import bibtex
 from jinja2 import Template
