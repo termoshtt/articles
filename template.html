@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- <link type="text/css" href="./css/blue/style.css" rel="stylesheet" /> -->
-        <!-- <script src="./js/jquery-1.7.2.min.js"></script> -->
-        <!-- <script src="./js/jquery.tablesorter.min.js"></script> -->
+        <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+        <script src="./js/jquery-1.7.2.min.js"></script>
+        <script src="./js/search.js"></script>
     </head>
     <body>
+        <div id="Search">
+            <input type="button" value="search" onclick="search()">
+        </div>
         {% for entry in entries %}
-        <div>
+        <div class="ArticleDiv">
             <h4><a href='./pdf/{{entry["key"]}}.pdf'>{{entry["title"]}}</a></h4>
             <ul>
                 <li>Author : {{entry["author"]}}</li>
