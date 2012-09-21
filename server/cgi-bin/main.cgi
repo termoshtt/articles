@@ -21,17 +21,14 @@ def convert(bib_file,template):
             entry.update({ u"year" : fields[u'year'], })
         entries.append(entry)
     tmpl = Template(template)
-    html = template.render({u'entries':entries})
+    html = tmpl.render({u'entries':entries})
     return html.encode("utf-8")
 
-import sys
 import os
 if __name__ == "__main__":
-    if len(sys.argv) <= 1:
-        bib_file = os.getenv("MAIN_BIB")
-    else:
-        bib_file = argv[1]
+    bib_file = os.getenv("MAIN_BIB")
     template = open("template.html").read()
     html = convert(bib_file,template)
+    print("Content-type: text/html\n")
     print(html)
 
