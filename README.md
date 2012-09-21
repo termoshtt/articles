@@ -1,4 +1,4 @@
-Paper Manage Tools
+bib2paperlist
 -------------------------
 
 This is a bibtex to HTML converter.
