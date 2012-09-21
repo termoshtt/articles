@@ -1,11 +1,36 @@
 #!/usr/bin/python2
 # coding=utf-8
 
-import sys
+template_html = """
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+        <script src="./js/jquery-1.7.2.min.js"></script>
+        <script src="./js/search.js"></script>
+    </head>
+    <body>
+        <form id="SearchForm">
+            <input id="SearchKeyID" type="text" name="SearchKeyWard" oninput="search()" autofocus placeholder="Search Keywards">
+        </form>
+        {% for entry in entries %}
+        <div class="ArticleDiv">
+            <h4><a href='./pdf/{{entry["key"]}}.pdf'>{{entry["title"]}}</a></h4>
+            <ul>
+                <li>Author : {{entry["author"]}}</li>
+                <li>Journal: {{entry["journal"]}}</li>
+                <li>Published Year: {{entry["year"]}}</li>
+            </ul>
+        </div>
+        {% endfor %}
+    </body>
+</html>
+"""
+
 from pybtex.database.input import bibtex
 from jinja2 import Template
 
-def main(bib_file,template_file):
+def main(bib_file):
     parser = bibtex.Parser()
     bib_data = parser.parse_file(bib_file)
 
@@ -25,16 +50,15 @@ def main(bib_file,template_file):
             entry.update({ u"year" : fields[u'year'], })
         entries.append(entry)
 
-    template = Template(open(template_file).read())
+    template = Template(template_html)
     html = template.render({u'entries':entries})
 
     print html.encode("utf-8")
 
-from optparse import OptionParser
+import sys
 if __name__ == "__main__":
-    par = OptionParser()
-    par.add_option("-t","--template",dest="templatefile",default="template.html")
-
-    (options,args) = par.parse_args()
-    main(args[0],options.templatefile)
+    if len(sys.argv) <= 1:
+        print "Usage: ./convert.py your.bib > your.html"
+        sys.exit(1)
+    main(sys.argv[1])
 
