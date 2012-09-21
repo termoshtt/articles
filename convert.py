@@ -34,7 +34,7 @@ def main(bib_file,template_file):
 from optparse import OptionParser
 if __name__ == "__main__":
     par = OptionParser()
-    par.add_option("-t","--template",dest="templatefile",default="all_template.html")
+    par.add_option("-t","--template",dest="templatefile",default="template.html")
 
     (options,args) = par.parse_args()
     main(args[0],options.templatefile)

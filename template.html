@@ -6,9 +6,9 @@
         <script src="./js/search.js"></script>
     </head>
     <body>
-        <div id="Search">
-            <input type="button" value="search" onclick="search()">
-        </div>
+        <form id="SearchForm">
+            <input id="SearchKeyID" type="text" name="SearchKeyWard" oninput="search()" autofocus placeholder="Search Keywards">
+        </form>
         {% for entry in entries %}
         <div class="ArticleDiv">
             <h4><a href='./pdf/{{entry["key"]}}.pdf'>{{entry["title"]}}</a></h4>
