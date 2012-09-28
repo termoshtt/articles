@@ -6,9 +6,20 @@
         <script src="./js/search.js"></script>
     </head>
     <body>
+        <h1>Articles</h1><hr/>
+        <nav>
         <form id="SearchForm">
             <input id="SearchKeyID" type="text" name="SearchKeyWard" oninput="search()" autofocus placeholder="Search Keywards">
         </form>
+        <div id="TagSelector">
+            <h5>Tags</h5>
+            <ul>
+            {% for tag in tags %}
+            <li><span style="cursor: pointer" onclick="tag_select({{tag}})">{{tag}}</span></li>
+            {% endfor %}
+            </ul>
+        </div>
+        </nav>
         {% for entry in entries %}
         <div class="ArticleDiv">
             <h4><a href='./pdf/{{entry["key"]}}.pdf'>{{entry["title"]}}</a></h4>
