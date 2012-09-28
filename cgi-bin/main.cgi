@@ -24,11 +24,23 @@ def convert(bib_file,template):
     html = tmpl.render({u'entries':entries})
     return html.encode("utf-8")
 
+import handler
+def generate_response(bib_file,template):
+    res = handler.Response()
+    html = convert(bib_file,template)
+    res.set_body(html)
+    print(res)
+
 import os
+
+import cgitb
+cgitb.enable()
+
 if __name__ == "__main__":
     bib_file = os.getenv("MAIN_BIB")
-    template = open("template.html").read()
-    html = convert(bib_file,template)
-    print("Content-type: text/html\n")
-    print(html)
+    if(os.path.exists("user.html")):
+        template = open("user.html").read()
+    else:
+        template = open("template.html").read()
+    generate_response(bib_file,template);
 
