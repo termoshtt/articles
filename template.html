@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+        <script src="./js/jquery-1.7.2.min.js"></script>
+        <script src="./js/search.js"></script>
+    </head>
+    <body>
+        <form id="SearchForm">
+            <input id="SearchKeyID" type="text" name="SearchKeyWard" oninput="search()" autofocus placeholder="Search Keywards">
+        </form>
+        {% for entry in entries %}
+        <div class="ArticleDiv">
+            <h4><a href='./pdf/{{entry["key"]}}.pdf'>{{entry["title"]}}</a></h4>
+            <ul>
+                <li>Author : {{entry["author"]}}</li>
+                <li>Journal: {{entry["journal"]}}</li>
+                <li>Published Year: {{entry["year"]}}</li>
+            </ul>
+        </div>
+        {% endfor %}
+    </body>
+</html>

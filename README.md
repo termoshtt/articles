@@ -1,16 +1,23 @@
-bib2paperlist
+articles
 -------------------------
 
-This is a bibtex to HTML converter.
+A bibtex based article manager.
 
-# Dependence
-This script is written in python2,
+# Features
+This manager consists of a CGI server and web application.
+The server script read your bibtex source and
+generate HTML article list, which contains links to your pdfs.
+The web application is conposed of this articles list and some useful functions.
+This application is based on HTML and javascript,
+so it can be saved in local storage.
+
+# Install
+## dependencies
+The most part of this project is written in python2,
 and depends on the following libraries.
 * pybtex
 * jinja2
 
-# Usage
-    ./bib2html.py your.bib > your.html
-To enable searching, you have to place your.html on the same place of convert.py
-or copy js/ direcotry to the direcotry where your.html is placed.
+## usage
+to be written...  
 
