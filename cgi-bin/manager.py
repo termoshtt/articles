@@ -24,6 +24,8 @@ def convert(bib_file,template):
     html = tmpl.render({u'entries':entries})
     return html.encode("utf-8")
 
+import cgitb
+cgitb.enable()
 import handler
 def generate_response(bib_file,template):
     res = handler.Response()
@@ -32,15 +34,24 @@ def generate_response(bib_file,template):
     print(res)
 
 import os
-
-import cgitb
-cgitb.enable()
-
+from optparse import OptionParser
 if __name__ == "__main__":
+    parser = OptionParser()
+    parser.add_option("-s","--static",action="store_true",dest="static")
+    parser.add_option("-t","--template",type="string",action="store",dest="template")
+    (option,args) = parser.parse_args()
+
     bib_file = os.getenv("MAIN_BIB")
-    if(os.path.exists("user.html")):
+
+    if(os.path.exists(option.template)):
+        template = open(option.template).read()
+    elif(os.path.exists("user.html")):
         template = open("user.html").read()
     else:
         template = open("template.html").read()
-    generate_response(bib_file,template);
+
+    if option.static:
+        print(convert(bib_file,template))
+    else:
+        generate_response(bib_file,template);
 
