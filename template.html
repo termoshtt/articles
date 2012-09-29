@@ -6,7 +6,7 @@
         <script src="./js/search.js"></script>
     </head>
     <body>
-        <h1>Articles</h1><hr/>
+        <h1>{{title}}</h1><hr/>
         <nav>
         <form id="SearchForm">
             <input id="SearchKeyID" type="text" name="SearchKeyWard" oninput="search()" autofocus placeholder="Search Keywards">
@@ -27,6 +27,7 @@
                 <li>Author : {{entry["author"]}}</li>
                 <li>Journal: {{entry["journal"]}}</li>
                 <li>Published Year: {{entry["year"]}}</li>
+                <li>Tags : {{entry["tags"]}}</li>
             </ul>
         </div>
         {% endfor %}

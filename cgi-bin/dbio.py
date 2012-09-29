@@ -38,7 +38,7 @@ class articles_db(object):
         if tag not in self.tags():
             self.cur.execute("insert into tags values (?)",(tag,))
 
-    def bibtexkey(self,tag=None):
+    def key(self,tag=None):
         res = self.cur.execute("select * from articles").fetchall()
         if tag == None:
             return [r[0] for r in res]
