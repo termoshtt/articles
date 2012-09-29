@@ -3,11 +3,12 @@
 
 from pybtex.database.input import bibtex
 from jinja2 import Template
-
-def convert(bib_file,template):
+import dbio
+def convert(bib_file,db_file,template):
     parser = bibtex.Parser()
     bib_data = parser.parse_file(bib_file)
     entries = []
+    art_db = dbio.articles_db(db_file)
     for key in bib_data.entries:
         persons = bib_data.entries[key].persons[u'author']
         authors = [unicode(au) for au in persons]
@@ -19,39 +20,48 @@ def convert(bib_file,template):
             entry.update({ u"journal" : fields[u'journal'], })
         if u'year' in fields:
             entry.update({ u"year" : fields[u'year'], })
+        tags = art_db.get_tag(key)
+        if tags != None:
+            entry.update({ u"tags" : ','.join(tags), })
         entries.append(entry)
+    
+    cfg = {}
+    cfg.update({u'title' : u'Articles',})
+    cfg.update({u'tags' : art_db.tags(),})
+    cfg.update({u'entries' : entries,})
     tmpl = Template(template)
-    html = tmpl.render({u'entries':entries})
+    html = tmpl.render(cfg)
     return html.encode("utf-8")
 
-import cgitb
-cgitb.enable()
 import handler
-def generate_response(bib_file,template):
+def generate_response(bib_file,db_file,template):
     res = handler.Response()
-    html = convert(bib_file,template)
+    html = convert(bib_file,db_file,template)
     res.set_body(html)
     print(res)
 
 import os
 from optparse import OptionParser
-if __name__ == "__main__":
+def main():
     parser = OptionParser()
     parser.add_option("-s","--static",action="store_true",dest="static")
-    parser.add_option("-t","--template",type="string",action="store",dest="template")
+    parser.add_option("-t","--template",type="string",action="store",dest="template",default="user.html")
+    parser.add_option("-d","--db_file",type="string",action="store",dest="db_file",default="articles.db")
     (option,args) = parser.parse_args()
 
     bib_file = os.getenv("MAIN_BIB")
-
     if(os.path.exists(option.template)):
         template = open(option.template).read()
-    elif(os.path.exists("user.html")):
-        template = open("user.html").read()
     else:
         template = open("template.html").read()
 
     if option.static:
-        print(convert(bib_file,template))
+        print(convert(bib_file,option.db_file,template))
     else:
-        generate_response(bib_file,template);
+        generate_response(bib_file,option.db_file,template);
+
+import cgitb
+cgitb.enable()
+if __name__ == "__main__":
+    main()
 
