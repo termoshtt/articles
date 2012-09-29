@@ -43,7 +43,7 @@ if __name__ == "__main__":
 
     bib_file = os.getenv("MAIN_BIB")
 
-    if(os.path.exists(option.template)):
+    if(option.template != None and os.path.exists(option.template)):
         template = open(option.template).read()
     elif(os.path.exists("user.html")):
         template = open("user.html").read()
