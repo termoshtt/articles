@@ -9,8 +9,11 @@ def convert(bib_file,template):
     bib_data = parser.parse_file(bib_file)
     entries = []
     for key in bib_data.entries:
-        persons = bib_data.entries[key].persons[u'author']
-        authors = [unicode(au) for au in persons]
+        try:
+            persons = bib_data.entries[key].persons[u'author']
+            authors = [unicode(au) for au in persons]
+        except:
+            authors = [u'unknown']
         entry = { u"key" : key, u"author" : ",".join(authors)}
         fields = bib_data.entries[key].fields
         if u'title' in fields:
