@@ -24,8 +24,8 @@ def convert(bib_file,db_file,template):
         if u'year' in fields:
             entry.update({ u"year" : fields[u'year'], })
         tags = art_db.get_tag(key)
-        if tags != None:
-            entry.update({ u"tags" : ','.join(tags), })
+        if tags:
+            entry.update({ u"tags" : tags, })
         entries.append(entry)
     
     cfg = {}
@@ -62,6 +62,8 @@ def main():
         print(convert(bib_file,option.db_file,template))
     else:
         generate_response(bib_file,option.db_file,template);
+    
+
 
 import cgitb
 cgitb.enable()
