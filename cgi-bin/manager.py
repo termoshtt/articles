@@ -10,8 +10,11 @@ def convert(bib_file,db_file,template):
     entries = []
     art_db = dbio.articles_db(db_file)
     for key in bib_data.entries:
-        persons = bib_data.entries[key].persons[u'author']
-        authors = [unicode(au) for au in persons]
+        try:
+            persons = bib_data.entries[key].persons[u'author']
+            authors = [unicode(au) for au in persons]
+        except:
+            authors = [u'unknown']
         entry = { u"key" : key, u"author" : ",".join(authors)}
         fields = bib_data.entries[key].fields
         if u'title' in fields:
