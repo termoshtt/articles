@@ -13,6 +13,9 @@ class articles_db(object):
     def __del__(self):
         self.con.commit()
         self.con.close()
+        
+    def commit(self):
+        self.con.commit()
 
     def _print_all(self):
         res = self.cur.execute("select * from articles").fetchall()
