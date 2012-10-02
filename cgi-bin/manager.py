@@ -4,11 +4,11 @@
 from pybtex.database.input import bibtex
 from jinja2 import Template
 import dbio
-def convert(bib_file,db_file,template):
+def convert(g_cfg):
     parser = bibtex.Parser()
-    bib_data = parser.parse_file(bib_file)
+    bib_data = parser.parse_file(g_cfg["bib_file"])
     entries = []
-    art_db = dbio.articles_db(db_file)
+    art_db = dbio.articles_db(g_cfg["db_file"])
     for key in bib_data.entries:
         try:
             persons = bib_data.entries[key].persons[u'author']
@@ -32,18 +32,19 @@ def convert(bib_file,db_file,template):
     cfg.update({u'title' : u'Articles',})
     cfg.update({u'tags' : art_db.tags(),})
     cfg.update({u'entries' : entries,})
-    tmpl = Template(template)
+    tmpl = Template(g_cfg["template"])
     html = tmpl.render(cfg)
     return html.encode("utf-8")
 
 import handler
-def generate_response(bib_file,db_file,template):
+def generate_response(g_cfg):
     res = handler.Response()
-    html = convert(bib_file,db_file,template)
+    html = convert(g_cfg)
     res.set_body(html)
     print(res)
 
 import os
+import pickle
 from optparse import OptionParser
 def main():
     parser = OptionParser()
@@ -52,18 +53,21 @@ def main():
     parser.add_option("-d","--db_file",type="string",action="store",dest="db_file",default="articles.db")
     (option,args) = parser.parse_args()
 
-    bib_file = os.getenv("MAIN_BIB")
+    g_cfg = {}
+    g_cfg["bib_file"] = os.getenv("MAIN_BIB")
     if(os.path.exists(option.template)):
-        template = open(option.template).read()
+        g_cfg["template"] = open(option.template).read()
     else:
-        template = open("template.html").read()
+        g_cfg["template"] = open("template.html").read()
+    g_cfg["db_file"] = option.db_file
 
     if option.static:
-        print(convert(bib_file,option.db_file,template))
+        print(convert(g_cfg))
     else:
-        generate_response(bib_file,option.db_file,template);
-    
+        generate_response(g_cfg);
 
+    g_cfg_f = open(".config.pickle","wb")
+    pickle.dump(g_cfg,g_cfg_f)
 
 import cgitb
 cgitb.enable()

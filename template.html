@@ -33,15 +33,17 @@
                 <li>Journal: {{entry["journal"]}}</li>
                 <li>Published Year: {{entry["year"]}}</li>
             </ul>
-            {% for tag in entry["tags"] %}
-                <span class="EachTag">{{tag}}</span>
-            {% endfor %}
-            <form class="ArticleTagAddFrom" action="tag.cgi" method="post">
-                <input type="hidden" name="TagAction" value="AddTagKey">
-                <input type="hidden" name="BibTeXKey" value='{{entry["key"]}}'>
-                <input type="text" name="TagName" placeholder="Tag Name">
-                <input type="submit" value="add Tag">
-            </form>
+            <div class="ArticleTagDiv">
+                {% for tag in entry["tags"] %}
+                    <span class="ArticleTag">{{tag}}</span>
+                {% endfor %}
+                <form class="ArticleTagAddFrom" action="tag.cgi" method="post">
+                    <input type="hidden" name="TagAction" value="AddTagKey">
+                    <input type="hidden" name="BibTeXKey" value='{{entry["key"]}}'>
+                    <input type="text" name="TagName" placeholder="Tag Name">
+                    <input type="submit" value="add Tag">
+                </form>
+            </div>
         </div>
         {% endfor %}
     </body>

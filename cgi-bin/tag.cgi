@@ -5,24 +5,27 @@ import cgitb
 cgitb.enable()
 import handler
 
-ActionTypes = ["AddTag"]
-
+import pickle
 import dbio
+import manager
 def AddTag(form):
     tag_name = form["TagName"].value
-    adb = dbio.articles_db("articles.db")
+    g_cfg_f = open(".config.pickle","rb")
+    g_cfg = pickle.load(g_cfg_f)
+    adb = dbio.articles_db(g_cfg["db_file"])
     adb.create_tag(tag_name)
-
-    res = handler.Response()
-    res.set_body("""
-        <html><body>
-        Tag Created Successfully : <br>
-        tag name = %s
-        </body></html>""" % tag_name)
-    print(res)
+    adb.commit()
+    manager.generate_response(g_cfg)
 
 def AddTagKey(form):
-    pass
+    tag_name = form["TagName"].value
+    bib_key = form["BibTeXKey"].value
+    g_cfg_f = open(".config.pickle","rb")
+    g_cfg = pickle.load(g_cfg_f)
+    adb = dbio.articles_db(g_cfg["db_file"])
+    adb.add_tag(bib_key,tag_name)
+    adb.commit()
+    manager.generate_response(g_cfg)
 
 action = {
         "AddTag" : AddTag,
@@ -33,7 +36,7 @@ def main():
     req = handler.Request()
     action_type = req.form["TagAction"].value
 
-    if action_type in ActionTypes:
+    if action_type in action:
         action[action_type](req.form)
     else:
         raise UserWarning("TagAction is not implimented yet." )
