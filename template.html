@@ -6,9 +6,25 @@
         <script src="./js/search.js"></script>
     </head>
     <body>
+        <h1>{{title}}</h1><hr/>
+        <nav>
         <form id="SearchForm">
             <input id="SearchKeyID" type="text" name="SearchKeyWard" oninput="search()" autofocus placeholder="Search Keywards">
         </form>
+        <div id="TagSelector">
+            <h5>Tags</h5>
+            <ul>
+            {% for tag in tags %}
+            <li><span style="cursor: pointer" onclick="tag_select({{tag}})">{{tag}}</span></li>
+            {% endfor %}
+            </ul>
+        </div>
+        <form id="TopAddTagForm" action="tag.cgi" method="post">
+            <input type="hidden" name="TagAction" value="AddTag">
+            <input type="text" name="TagName" placeholder="Tag Name">
+            <input type="submit" value="create Tag">
+        </form>
+        </nav>
         {% for entry in entries %}
         <div class="ArticleDiv">
             <h4><a href='./pdf/{{entry["key"]}}.pdf'>{{entry["title"]}}</a></h4>
@@ -17,6 +33,17 @@
                 <li>Journal: {{entry["journal"]}}</li>
                 <li>Published Year: {{entry["year"]}}</li>
             </ul>
+            <div class="ArticleTagDiv">
+                {% for tag in entry["tags"] %}
+                    <span class="ArticleTag">{{tag}}</span>
+                {% endfor %}
+                <form class="ArticleTagAddFrom" action="tag.cgi" method="post">
+                    <input type="hidden" name="TagAction" value="AddTagKey">
+                    <input type="hidden" name="BibTeXKey" value='{{entry["key"]}}'>
+                    <input type="text" name="TagName" placeholder="Tag Name">
+                    <input type="submit" value="add Tag">
+                </form>
+            </div>
         </div>
         {% endfor %}
     </body>
