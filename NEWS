@@ -1,0 +1,29 @@
+News for articles
+==================
+
+## Notation
+- NEW new features
+- BUG bug fixes
+- REF refactoring
+- MOD modifications of the specification
+- DEL deletions
+
+## News
+
+v0.7
+------
+* NEW enable tag feature
+
+v0.6(pull request #1)
+----------------------
+* MOD improve search function
+* BUG enable exception when the author is not specified.
+
+v0.5
+-----
+* NEW CGI server mode is created
+
+v0.4 
+-----
+* NEW search function is implemented
+
