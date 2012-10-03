@@ -26,12 +26,12 @@ class articles_db(object):
         if res != None:
             print([r[0] for r in res])
 
-    def get_tag(self,bibtexkey):
+    def article_tags(self,bibtexkey):
         res = self.cur.execute('select tags from articles where bibtexkey=?',(bibtexkey,)).fetchone()
-        if res == None:
+        if res == None or res[0] == "":
             return None
         else:
-            return res[0].split(',')
+            return res[0].strip(',').split(',')
 
     def tags(self):
         res = self.cur.execute('select name from tags').fetchall()
@@ -41,7 +41,17 @@ class articles_db(object):
         if tag not in self.tags():
             self.cur.execute("insert into tags values (?)",(tag,))
 
-    def key(self,tag=None):
+    def delete_tag(self,tag):
+        if tag not in self.tags():
+            Warning("tag does not exist.")
+            return False
+        tag_keys = self.keys(tag)
+        if len(tag_keys) == 0:
+            self.cur.execute("delete from tags where name=?",(tag,))
+        else:
+            return False
+
+    def keys(self,tag=None):
         res = self.cur.execute("select * from articles").fetchall()
         if tag == None:
             return [r[0] for r in res]
@@ -55,21 +65,22 @@ class articles_db(object):
                     result.append(a_key)
             return result
 
-    def add_tag(self,bibtexkey,tag):
+    def tagging(self,bibtexkey,tag):
         if tag not in self.tags():
             self.create_tag(tag)
-        art_tags = self.get_tag(bibtexkey)
-        if art_tags == None:
+        res = self.cur.execute('select tags from articles where bibtexkey=?',(bibtexkey,)).fetchone()
+        if res == None:
             self.cur.execute("insert into articles values (?,?)",(bibtexkey,tag))
             return
         else:
+            art_tags = res[0].strip(', ').split(',')
             if not tag in art_tags:
                 art_tags.append(tag)
                 self.cur.execute("update articles set tags = ? where bibtexkey = ?",(",".join(art_tags),bibtexkey))
             return
 
-    def remove_tag(self,bibtexkey,tag):
-        art_tags = self.get_tag(bibtexkey)
+    def untagging(self,bibtexkey,tag):
+        art_tags = self.article_tags(bibtexkey)
         if art_tags != None:
             if tag in art_tags:
                 art_tags.remove(tag)
