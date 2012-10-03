@@ -23,7 +23,7 @@ def convert(g_cfg):
             entry.update({ u"journal" : fields[u'journal'], })
         if u'year' in fields:
             entry.update({ u"year" : fields[u'year'], })
-        tags = art_db.get_tag(key)
+        tags = art_db.article_tags(key)
         if tags:
             entry.update({ u"tags" : tags, })
         entries.append(entry)
