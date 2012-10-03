@@ -36,6 +36,12 @@
             <div class="ArticleTagDiv">
                 {% for tag in entry["tags"] %}
                     <span class="ArticleTag">{{tag}}</span>
+                    <form class="ArticleTagDeleteForm" action="tag.cgi" method="post">
+                        <input type="hidden" name="TagAction" value="RemoveTagKey">
+                        <input type="hidden" name="BibTeXKey" value='{{entry["key"]}}'>
+                        <input type="hidden" name="TagName" value="{{tag}}">
+                        <input type="submit" value="delete">
+                    </form>
                 {% endfor %}
                 <form class="ArticleTagAddFrom" action="tag.cgi" method="post">
                     <input type="hidden" name="TagAction" value="AddTagKey">

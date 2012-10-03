@@ -27,9 +27,19 @@ def AddTagKey(form):
     adb.commit()
     manager.generate_response(g_cfg)
 
+def RemoveTagKey(form):
+    tag_name = form["TagName"].value
+    bib_key = form["BibTeXKey"].value
+    g_cfg = pickle.load(open(".config.pickle","rb"))
+    adb = dbio.articles_db(g_cfg["db_file"])
+    adb.remove_tag(bib_key,tag_name)
+    adb.commit()
+    manager.generate_response(g_cfg)
+
 action = {
         "AddTag" : AddTag,
         "AddTagKey" : AddTagKey,
+        "RemoveTagKey" : RemoveTagKey,
     }
 
 def main():

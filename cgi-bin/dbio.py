@@ -28,10 +28,10 @@ class articles_db(object):
 
     def get_tag(self,bibtexkey):
         res = self.cur.execute('select tags from articles where bibtexkey=?',(bibtexkey,)).fetchone()
-        if res == None:
+        if res == None or res[0] == "":
             return None
         else:
-            return res[0].split(',')
+            return res[0].strip(',').split(',')
 
     def tags(self):
         res = self.cur.execute('select name from tags').fetchall()
@@ -58,11 +58,12 @@ class articles_db(object):
     def add_tag(self,bibtexkey,tag):
         if tag not in self.tags():
             self.create_tag(tag)
-        art_tags = self.get_tag(bibtexkey)
-        if art_tags == None:
+        res = self.cur.execute('select tags from articles where bibtexkey=?',(bibtexkey,)).fetchone()
+        if res == None:
             self.cur.execute("insert into articles values (?,?)",(bibtexkey,tag))
             return
         else:
+            art_tags = res[0].strip(', ').split(',')
             if not tag in art_tags:
                 art_tags.append(tag)
                 self.cur.execute("update articles set tags = ? where bibtexkey = ?",(",".join(art_tags),bibtexkey))
