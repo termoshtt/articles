@@ -2,8 +2,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
-        <script src="./js/jquery-1.7.2.min.js"></script>
+        <script src="./js/jquery-1.8.2.js"></script>
+        <!-- <script src="./js/jquery-1.7.2.min.js"></script> -->
         <script src="./js/search.js"></script>
+        <script src="./js/tag.js"></script>
     </head>
     <body>
         <h1>{{title}}</h1><hr/>
@@ -14,16 +16,19 @@
         <div id="TagSelector">
             <h5>Tags</h5>
             <ul>
-            {% for tag in tags %}
-            <li>
-                <span style="cursor: pointer" onclick="tag_select({{tag}})">{{tag}}</span>
-                <form class="TagSelectorDeleteForm" action="tag.cgi" method="post">
-                    <input type="hidden" name="TagAction" value="DeleteTag">
-                    <input type="hidden" name="TagName" value="{{tag}}">
-                    <input type="submit" value="delete">
-                </form>
-            </li>
-            {% endfor %}
+                {% for tag in tags %}
+                <li>
+                    <span style="cursor: pointer" onclick="tag_select('{{tag}}')">{{tag}}</span>
+                    <form class="TagSelectorDeleteForm" action="tag.cgi" method="post">
+                        <input type="hidden" name="TagAction" value="DeleteTag">
+                        <input type="hidden" name="TagName" value="{{tag}}">
+                        <input type="submit" value="delete">
+                    </form>
+                </li>
+                {% endfor %}
+                <li>
+                    <span style="cursor: pointer" onclick="tag_select('reset')">reset</span>
+                </li>
             </ul>
         </div>
         <form id="TopAddTagForm" action="tag.cgi" method="post">
