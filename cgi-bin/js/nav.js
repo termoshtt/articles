@@ -28,13 +28,15 @@ function show_articles(){
 function search(){
     // $(".ArticleDiv").show();
     show_articles();
-    var keys = $("#SearchForm [name=SearchKeyWard]").val().split(" ");
+    var keys = $("#SearchForm [name=SearchKeyWard]").val().replace(/ +$/g, "").split(/ +/);
     jQuery.expr[':'].insenseContains = function(a, i, m) {
         return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
     };
-    jQuery.each(keys,function(){
-        $(".ArticleDiv:not(:insenseContains("+this+"))").hide()
-    });
+    if (!(keys.length == 1 && keys[0] == "")) {
+        jQuery.each(keys,function(){
+            $(".ArticleDiv:not(:insenseContains("+this+"))").hide()
+        });
+    }
 }
 
 function tag_select(tag){
