@@ -47,7 +47,7 @@ def unTagging(form):
 action = {
         "CreateTag" : CreateTag,
         "DeleteTag" : DeleteTag,
-        "Tagging" : Tagging,
+        "Tagging"   : Tagging,
         "unTagging" : unTagging,
     }
 

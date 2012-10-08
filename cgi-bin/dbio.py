@@ -43,8 +43,7 @@ class articles_db(object):
 
     def delete_tag(self,tag):
         if tag not in self.tags():
-            Warning("tag does not exist.")
-            return False
+            raise Warning("tag does not exist.")
         tag_keys = self.keys(tag)
         if len(tag_keys) == 0:
             self.cur.execute("delete from tags where name=?",(tag,))
@@ -81,12 +80,10 @@ class articles_db(object):
 
     def untagging(self,bibtexkey,tag):
         art_tags = self.article_tags(bibtexkey)
-        if art_tags != None:
-            if tag in art_tags:
-                art_tags.remove(tag)
-                self.cur.execute("update articles set tags = ? where bibtexkey = ?",(",".join(art_tags),bibtexkey))
+        if art_tags != None and tag in art_tags:
+            art_tags.remove(tag)
+            self.cur.execute("update articles set tags = ? where bibtexkey = ?",(",".join(art_tags),bibtexkey))
             return
         else:
-            # should throw exception ?
-            return
+            raise Warning("tag does not in articles tag")
 
