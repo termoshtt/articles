@@ -43,6 +43,8 @@ def main():
     opt_parser = OptionParser()
     opt_parser.add_option("-c","--config",action="store",type="string",
                           dest="config",default="~/.articles.ini")
+    opt_parser.add_option("-n","--no-cgi-server",action="store_true",dest="nocgi")
+    opt_parser.add_option("-d","--daemonize",action="store_true",dest="daemonize")
     (option,args) = opt_parser.parse_args()
 
     config_file = os.path.expanduser(option.config)
@@ -50,8 +52,24 @@ def main():
         print("configure file does not exists : " + config_file)
         return -1
     config = read_configure_file(config_file)
+
     generate_html(config)
-    start_CGI_server(config)
+
+    pid_filename = "/tmp/articles.pid"
+    log_filename = "server.log"
+    if not option.nocgi:
+        if option.daemonize and not os.path.exists(pid_filename):
+            from daemon import DaemonContext
+            from daemon.pidfile import PIDLockFile
+            dc = DaemonContext(
+                    pidfile = PIDLockFile(pid_filename),
+                    stderr = open(log_filename,"w+"),
+                    working_directory = os.getcwd(),
+                )
+            with dc:
+                start_CGI_server(config)
+        else:
+            start_CGI_server(config)
 
 if __name__ == "__main__":
     main()
