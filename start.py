@@ -27,8 +27,15 @@ def generate_html(config):
     with open(html_path,'w') as f:
         f.write(bib2html.convert(config))
 
+import BaseHTTPServer
+import CGIHTTPServer
 def start_CGI_server(config):
-    pass
+    server = BaseHTTPServer.HTTPServer
+    handler = CGIHTTPServer.CGIHTTPRequestHandler
+    addr = ("",8000)
+    # handler.cgi_directories = [""]
+    httpd = server(addr,handler)
+    httpd.serve_forever()
 
 import os.path
 from optparse import OptionParser
