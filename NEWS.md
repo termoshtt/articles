@@ -10,6 +10,10 @@ News for articles
 
 ## News
 
+v0.8.1(pull request #4)
+-----------------------
+* BUG refine search function not to emit error when the word is empty
+
 v0.8
 -----
 * NEW enable tag selector
