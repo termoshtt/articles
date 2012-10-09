@@ -3,11 +3,11 @@
 
 import cgitb
 cgitb.enable()
-import handler
 
 import pickle
-import dbio
-import manager
+from articles import dbio
+from articles import bib2html
+from articles import handler
 def CreateTag(form):
     tag_name = form["TagName"].value
     g_cfg_f = open(".config.pickle","rb")
@@ -15,7 +15,7 @@ def CreateTag(form):
     adb = dbio.articles_db(g_cfg["db_file"])
     adb.create_tag(tag_name)
     adb.commit()
-    manager.generate_response(g_cfg)
+    bib2html.generate_response(g_cfg)
 
 def DeleteTag(form):
     tag_name = form["TagName"].value
@@ -23,7 +23,7 @@ def DeleteTag(form):
     adb = dbio.articles_db(g_cfg["db_file"])
     adb.delete_tag(tag_name)
     adb.commit()
-    manager.generate_response(g_cfg)
+    bib2html.generate_response(g_cfg)
 
 def Tagging(form):
     tag_name = form["TagName"].value
@@ -33,7 +33,7 @@ def Tagging(form):
     adb = dbio.articles_db(g_cfg["db_file"])
     adb.tagging(bib_key,tag_name)
     adb.commit()
-    manager.generate_response(g_cfg)
+    bib2html.generate_response(g_cfg)
 
 def unTagging(form):
     tag_name = form["TagName"].value
@@ -42,7 +42,7 @@ def unTagging(form):
     adb = dbio.articles_db(g_cfg["db_file"])
     adb.untagging(bib_key,tag_name)
     adb.commit()
-    manager.generate_response(g_cfg)
+    bib2html.generate_response(g_cfg)
 
 action = {
         "CreateTag" : CreateTag,
