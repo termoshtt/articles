@@ -32,11 +32,11 @@ function search(){
     jQuery.expr[':'].insenseContains = function(a, i, m) {
         return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
     };
-    if (!(keys.length == 1 && keys[0] == "")) {
-        jQuery.each(keys,function(){
-            $(".ArticleDiv:not(:insenseContains("+this+"))").hide()
-        });
-    }
+    jQuery.each(keys,function(){
+        if (this != "") {
+            $(".ArticleDiv:not(:insenseContains("+this+"))").hide();
+        }
+    });
 }
 
 function tag_select(tag){
