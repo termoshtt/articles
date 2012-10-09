@@ -11,6 +11,7 @@ def read_configure_file(filename):
     config["template_file"] = parser.get("name","template")
     config["db_file"]       = parser.get("name","database")
     config["html_file"]     = parser.get("name","html")
+    config["port"]          = parser.get("server","port")
     return config
 
 def _read_path(parser,dest):
@@ -19,20 +20,20 @@ def _read_path(parser,dest):
         raise Warning("Path does not found : destination = %s, value = %s" % (dest,path))
     return os.path.expanduser(path)
 
-import sys
-sys.path.append("./cgi-bin")
 from articles import bib2html
 def generate_html(config):
     html_path = os.path.join(config["output"],config["html_file"])
     with open(html_path,'w') as f:
         f.write(bib2html.convert(config))
 
+import pickle
 import BaseHTTPServer
 import CGIHTTPServer
 def start_CGI_server(config):
+    pickle.dump(config,open(".config.pickle",'wb'))
     server = BaseHTTPServer.HTTPServer
     handler = CGIHTTPServer.CGIHTTPRequestHandler
-    addr = ("",8000)
+    addr = ("",config["port"])
     # handler.cgi_directories = [""]
     httpd = server(addr,handler)
     httpd.serve_forever()
