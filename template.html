@@ -4,9 +4,12 @@
         <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
         <script src="./js/jquery-1.8.2.js"></script>
         <script src="./js/nav.js"></script>
+        <script src="./js/ready.js"></script>
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
+        <title>{{title}}</title>
     </head>
     <body>
-        <h1>{{title}}</h1><hr/>
+        <h1 id="PageTitle">{{title}}</h1><hr/>
         <nav>
         <form id="SearchForm">
             <input id="SearchKeyID" type="text" name="SearchKeyWard" oninput="search()" autofocus placeholder="Search Keywards">
@@ -16,49 +19,32 @@
             <ul>
                 {% for tag in tags %}
                 <li>
-                    <span style="cursor: pointer" onclick="tag_select('{{tag}}')">{{tag}}</span>
-                    <form class="TagSelectorDeleteForm" action="tag.cgi" method="post" style="display: inline">
-                        <input type="hidden" name="TagAction" value="DeleteTag">
-                        <input type="hidden" name="TagName" value="{{tag}}">
-                        <input type="submit" value="delete">
-                    </form>
+                    <span id="{{tag}}" class="Tag">{{tag}}</span>
                 </li>
                 {% endfor %}
                 <li>
-                    <span style="cursor: pointer" onclick="tag_select('reset')">reset</span>
+                    <span id="ResetTag" class="Tag">reset</span>
                 </li>
             </ul>
         </div>
-        <form id="TopAddTagForm" action="tag.cgi" method="post">
-            <input type="hidden" name="TagAction" value="CreateTag">
-            <input type="text" name="TagName" placeholder="Tag Name">
-            <input type="submit" value="create Tag">
-        </form>
+        <div id="TagAdd">
+            <input type="text" placeholder="Tag Name"/>
+            <input type="button" value="create Tag"/>
+        </div>
         </nav>
         {% for entry in entries %}
-        <div class="ArticleDiv">
-            <h4><a href='./pdf/{{entry["key"]}}.pdf'>{{entry["title"]}}</a></h4>
+        <div id='{{entry["key"]}}' class="Article">
+            <a class="ArticleLink" href='./pdf/{{entry["key"]}}.pdf'>{{entry["title"]}}</a>
             <ul>
                 <li>Author : {{entry["author"]}}</li>
                 <li>Journal: {{entry["journal"]}}</li>
                 <li>Published Year: {{entry["year"]}}</li>
             </ul>
-            <div class="ArticleTagDiv">
+            <div class="ArticleTag">
                 {% for tag in entry["tags"] %}
                     <span class="ArticleTag">{{tag}}</span>
-                    <form class="ArticleTagDeleteForm" action="tag.cgi" method="post" style="display: inline">
-                        <input type="hidden" name="TagAction" value="unTagging">
-                        <input type="hidden" name="BibTeXKey" value='{{entry["key"]}}'>
-                        <input type="hidden" name="TagName" value="{{tag}}">
-                        <input type="submit" value="delete">
-                    </form>
                 {% endfor %}
-                <form class="ArticleTagAddFrom" action="tag.cgi" method="post">
-                    <input type="hidden" name="TagAction" value="Tagging">
-                    <input type="hidden" name="BibTeXKey" value='{{entry["key"]}}'>
-                    <input type="text" name="TagName" placeholder="Tag Name">
-                    <input type="submit" value="add Tag">
-                </form>
+                <div class="AddArticleTag"></div>
             </div>
         </div>
         {% endfor %}

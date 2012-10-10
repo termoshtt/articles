@@ -14,12 +14,12 @@ function check_tag_selected(){
 
 function show_articles(){
     if(!g_tag_selected){
-        $(".ArticleDiv").show();
+        $("div.Article").show();
     }else{
-        $(".ArticleDiv").hide();
+        $("div.Article").hide();
         for(tag in g_tags){
             if(g_tags[tag]){
-                $(".ArticleDiv:has(.ArticleTag:contains("+tag+"))").show();
+                $("div.Article:has(span.ArticleTag:contains("+tag+"))").show();
             }
         }
     }
@@ -34,7 +34,7 @@ function search(){
     };
     jQuery.each(keys,function(){
         if (this != "") {
-            $(".ArticleDiv:not(:insenseContains("+this+"))").hide();
+            $("div.Article:not(:insenseContains("+this+"))").hide();
         }
     });
 }
@@ -63,3 +63,4 @@ function _disable_tag(tag){
     g_tags[tag] = false;
     $("#TagSelector ul li span:contains("+tag+")").css("color","black");
 }
+
