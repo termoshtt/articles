@@ -36,3 +36,10 @@ def convert(g_cfg):
     html = tmpl.render(cfg)
     return html.encode("utf-8")
 
+import os
+def generate(config):
+    if not os.path.isdir(config["output"]):
+        os.mkdir(config["output"])
+    html_path = os.path.join(config["output"],config["html_file"])
+    with open(html_path,'w') as f:
+        f.write(convert(config))

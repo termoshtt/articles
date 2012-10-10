@@ -64,3 +64,15 @@ function _disable_tag(tag){
     $("#TagSelector ul li span:contains("+tag+")").css("color","black");
 }
 
+function create_tag(name){
+    alert(name);
+    $.post("http://localhost:8000/cgi-bin/tag.cgi",
+            {
+                "TagAction" : "CreateTag",
+                "TagName" : name,
+            },
+            function(response){
+                alert("res");
+            });
+}
+
