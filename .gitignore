@@ -3,4 +3,5 @@
 *.db
 .*.swp
 *.pickle
+*.log
 
