@@ -22,13 +22,18 @@ def _read_path(parser,dest):
 
 from articles import bib2html
 def generate_html(config):
+    if not os.path.isdir(config["output"]):
+        os.mkdir(config["output"])
     html_path = os.path.join(config["output"],config["html_file"])
     with open(html_path,'w') as f:
         f.write(bib2html.convert(config))
 
 import shutil
+import urllib2
 def copy_attachment(config):
     attachments = ["js"]
+    jquery_filename = "jquery-1.8.2.js"
+    jquery_url = "http://code.jquery.com/" + jquery_filename
     for att in attachments:
         dest_path = os.path.join(config["output"],att)
         if not os.path.isdir(dest_path):
@@ -36,6 +41,9 @@ def copy_attachment(config):
         for src in os.listdir(att):
             src_path = os.path.join(att,src)
             shutil.copy2(src_path,dest_path)
+        if att == "js":
+            with open(os.path.join(dest_path,jquery_filename),"w") as f:
+                f.write(urllib2.urlopen(jquery_url).read())
 
 import pickle
 import BaseHTTPServer
