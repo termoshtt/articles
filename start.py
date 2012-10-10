@@ -11,7 +11,7 @@ def read_configure_file(filename):
     config["template_file"] = parser.get("name","template")
     config["db_file"]       = parser.get("name","database")
     config["html_file"]     = parser.get("name","html")
-    config["port"]          = parser.get("server","port")
+    config["port"]          = int(parser.get("server","port"))
     return config
 
 def _read_path(parser,dest):
@@ -25,6 +25,17 @@ def generate_html(config):
     html_path = os.path.join(config["output"],config["html_file"])
     with open(html_path,'w') as f:
         f.write(bib2html.convert(config))
+
+import shutil
+def copy_attachment(config):
+    attachments = ["js"]
+    for att in attachments:
+        dest_path = os.path.join(config["output"],att)
+        if not os.path.isdir(dest_path):
+            os.mkdir(dest_path)
+        for src in os.listdir(att):
+            src_path = os.path.join(att,src)
+            shutil.copy2(src_path,dest_path)
 
 import pickle
 import BaseHTTPServer
@@ -46,6 +57,7 @@ def main():
                           dest="config",default="~/.articles.ini")
     opt_parser.add_option("-n","--no-cgi-server",action="store_true",dest="nocgi")
     opt_parser.add_option("-d","--daemonize",action="store_true",dest="daemonize")
+    opt_parser.add_option("-i","--install",action="store_true",dest="install")
     (option,args) = opt_parser.parse_args()
 
     config_file = os.path.expanduser(option.config)
@@ -55,6 +67,8 @@ def main():
     config = read_configure_file(config_file)
 
     generate_html(config)
+    if option.install:
+        copy_attachment(config)
 
     pid_filename = "/tmp/articles.pid"
     log_filename = "server.log"
