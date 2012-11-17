@@ -39,6 +39,7 @@ This script needs some configure values:
 
 These values are defined in ~/.articles.ini (default).
 The sample of this configuration file is given in sample.ini.
+
 *In order to use the link of HTML, the PDF files should place in outputdir/pdf/
 and name as [bibtexkey].pdf.*
 
@@ -49,16 +50,24 @@ and also work as a CGI server.
 ### install (Linux)
 Before install this program, please install pybtex and jinja2.
 At first, you get the source code of this program:
+```shell
     git clone http://github.com/termoshtt/ariticles.git
+```
 or please download .zip and extract.
 Next go into the directory and copy the configure file to your $HOME:
+```shell
     cd articles
     cp sample.ini ~/.articles.ini
+```
 You should modify the configure file now.
 After configuration, generate HTML and copy js/, css/, icons/ to your install directory.
+```shell
     ./start.py --install --no-cgi-server
+```
 if you do not want to place ~/.articles.ini, you can use other configure file:
+```shell
     ./start.py -i -n -c path/to/configure.ini
+```
 --install can be abbreviate by -i and --no-cgi-server by -n.
 
 Up to here, the installation is finished.
@@ -66,13 +75,17 @@ You can find articles.html (or name you set) in your install directory.
 
 ### normal use
 After installed, you can start a CGI server as:
+```shell
     ./start.py
+```
 Since tagging feature is implemented as a CGI,
 the tagging cannot use unless the CGI server stands.
 In other word, searching and tag choosing can be used without the CGI server.
 
 (experimental)
 The CGI server can daemonize by option -d:
+```shell
     ./start.py -d
+```
 This feature have not fully tested.
 
