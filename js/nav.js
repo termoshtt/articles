@@ -57,11 +57,11 @@ function tag_select(tag){
 
 function _enable_tag(tag){
     g_tags[tag] = true;
-    $("#TagSelector ul li span:contains("+tag+")").css("color","red");
+    $("div.Tag>span:contains("+tag+")").css("color","red");
 }
 function _disable_tag(tag){
     g_tags[tag] = false;
-    $("#TagSelector ul li span:contains("+tag+")").css("color","black");
+    $("div.Tag>span:contains("+tag+")").css("color","black");
 }
 
 function _send_to_cgi(action,name,key=""){
