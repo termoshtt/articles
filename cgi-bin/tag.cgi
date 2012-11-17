@@ -3,51 +3,56 @@
 
 import cgitb
 cgitb.enable()
-import handler
 
 import pickle
-import dbio
-import manager
+import os
+import sys
+sys.path.append(os.getcwd())
+from articles import dbio
+from articles import handler
+from articles import bib2html
 def CreateTag(form):
     tag_name = form["TagName"].value
-    g_cfg_f = open(".config.pickle","rb")
-    g_cfg = pickle.load(g_cfg_f)
+    with open(".config.pickle","rb") as g_cfg_f:
+        g_cfg = pickle.load(g_cfg_f)
     adb = dbio.articles_db(g_cfg["db_file"])
     adb.create_tag(tag_name)
     adb.commit()
-    manager.generate_response(g_cfg)
+    bib2html.generate(g_cfg)
 
 def DeleteTag(form):
     tag_name = form["TagName"].value
-    g_cfg = pickle.load(open(".config.pickle","rb"))
+    with open(".config.pickle","rb") as g_cfg_f:
+        g_cfg = pickle.load(g_cfg_f)
     adb = dbio.articles_db(g_cfg["db_file"])
     adb.delete_tag(tag_name)
     adb.commit()
-    manager.generate_response(g_cfg)
+    bib2html.generate(g_cfg)
 
 def Tagging(form):
     tag_name = form["TagName"].value
     bib_key = form["BibTeXKey"].value
-    g_cfg_f = open(".config.pickle","rb")
-    g_cfg = pickle.load(g_cfg_f)
+    with open(".config.pickle","rb") as g_cfg_f:
+        g_cfg = pickle.load(g_cfg_f)
     adb = dbio.articles_db(g_cfg["db_file"])
     adb.tagging(bib_key,tag_name)
     adb.commit()
-    manager.generate_response(g_cfg)
+    bib2html.generate(g_cfg)
 
 def unTagging(form):
     tag_name = form["TagName"].value
     bib_key = form["BibTeXKey"].value
-    g_cfg = pickle.load(open(".config.pickle","rb"))
+    with open(".config.pickle","rb") as g_cfg_f:
+        g_cfg = pickle.load(g_cfg_f)
     adb = dbio.articles_db(g_cfg["db_file"])
     adb.untagging(bib_key,tag_name)
     adb.commit()
-    manager.generate_response(g_cfg)
+    bib2html.generate(g_cfg)
 
 action = {
         "CreateTag" : CreateTag,
         "DeleteTag" : DeleteTag,
-        "Tagging" : Tagging,
+        "Tagging"   : Tagging,
         "unTagging" : unTagging,
     }
 

@@ -32,45 +32,14 @@ def convert(g_cfg):
     cfg.update({u'title' : u'Articles',})
     cfg.update({u'tags' : art_db.tags(),})
     cfg.update({u'entries' : entries,})
-    tmpl = Template(g_cfg["template"])
+    tmpl = Template(open(g_cfg["template_file"],'r').read())
     html = tmpl.render(cfg)
     return html.encode("utf-8")
 
-import handler
-def generate_response(g_cfg):
-    res = handler.Response()
-    html = convert(g_cfg)
-    res.set_body(html)
-    print(res)
-
 import os
-import pickle
-from optparse import OptionParser
-def main():
-    parser = OptionParser()
-    parser.add_option("-s","--static",action="store_true",dest="static")
-    parser.add_option("-t","--template",type="string",action="store",dest="template",default="user.html")
-    parser.add_option("-d","--db_file",type="string",action="store",dest="db_file",default="articles.db")
-    (option,args) = parser.parse_args()
-
-    g_cfg = {}
-    g_cfg["bib_file"] = os.getenv("MAIN_BIB")
-    if(os.path.exists(option.template)):
-        g_cfg["template"] = open(option.template).read()
-    else:
-        g_cfg["template"] = open("template.html").read()
-    g_cfg["db_file"] = option.db_file
-
-    if option.static:
-        print(convert(g_cfg))
-    else:
-        generate_response(g_cfg);
-
-    g_cfg_f = open(".config.pickle","wb")
-    pickle.dump(g_cfg,g_cfg_f)
-
-import cgitb
-cgitb.enable()
-if __name__ == "__main__":
-    main()
-
+def generate(config):
+    if not os.path.isdir(config["output"]):
+        os.mkdir(config["output"])
+    html_path = os.path.join(config["output"],config["html_file"])
+    with open(html_path,'w') as f:
+        f.write(convert(config))
