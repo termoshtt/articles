@@ -20,18 +20,10 @@ def _read_path(parser,dest):
         raise Warning("Path does not found : destination = %s, value = %s" % (dest,path))
     return os.path.expanduser(path)
 
-from articles import bib2html
-def generate_html(config):
-    if not os.path.isdir(config["output"]):
-        os.mkdir(config["output"])
-    html_path = os.path.join(config["output"],config["html_file"])
-    with open(html_path,'w') as f:
-        f.write(bib2html.convert(config))
-
 import shutil
 import urllib2
 def copy_attachment(config):
-    attachments = ["js"]
+    attachments = ["js","css"]
     jquery_filename = "jquery-1.8.2.js"
     jquery_url = "http://code.jquery.com/" + jquery_filename
     for att in attachments:
@@ -59,6 +51,7 @@ def start_CGI_server(config):
 
 import os.path
 from optparse import OptionParser
+from articles import bib2html
 def main():
     opt_parser = OptionParser()
     opt_parser.add_option("-c","--config",action="store",type="string",
@@ -74,7 +67,7 @@ def main():
         return -1
     config = read_configure_file(config_file)
 
-    generate_html(config)
+    bib2html.generate(config)
     if option.install:
         copy_attachment(config)
 
