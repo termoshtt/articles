@@ -10,6 +10,14 @@ News for articles
 
 ## News
 
+v0.9
+-----
+* MOD switch to static HTML page from CGI.
+* NEW configure script ~/.articles.ini is created
+* NEW daemonaize is supported (experimental)
+* DEL omit jqurey (change to get from www)
+* NEW some looking features
+
 v0.8.1(pull request #4)
 -----------------------
 * BUG refine search function not to emit error when the word is empty
