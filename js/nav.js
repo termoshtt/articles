@@ -19,7 +19,7 @@ function show_articles(){
         $("div.Article").hide();
         for(tag in g_tags){
             if(g_tags[tag]){
-                $("div.Article:has(span.ArticleTag:contains("+tag+"))").show();
+                $("div.Article:has(span:contains("+tag+"))").show();
             }
         }
     }
@@ -64,15 +64,31 @@ function _disable_tag(tag){
     $("#TagSelector ul li span:contains("+tag+")").css("color","black");
 }
 
-function create_tag(name){
-    alert(name);
+function _send_to_cgi(action,name,key=""){
     $.post("http://localhost:8000/cgi-bin/tag.cgi",
             {
-                "TagAction" : "CreateTag",
+                "TagAction" : action,
                 "TagName" : name,
-            },
-            function(response){
-                alert("res");
+                "BibTeXKey" : key,
             });
 }
 
+function create_tag(name){
+    _send_to_cgi("CreateTag",name);
+    alert("Tag created. Please reload");
+}
+
+function delete_tag(name){
+    _send_to_cgi("DeleteTag",name);
+    alert("Tag deleted. Please reload");
+}
+
+function tagging(name,key){
+    _send_to_cgi("Tagging",name,key);
+    alert("Tagging. Please reload");
+}
+
+function untagging(name,key){
+    _send_to_cgi("unTagging",name,key);
+    alert("unTagging. Please reload");
+}

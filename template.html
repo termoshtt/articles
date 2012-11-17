@@ -14,23 +14,26 @@
         <form id="SearchForm">
             <input id="SearchKeyID" type="text" name="SearchKeyWard" oninput="search()" autofocus placeholder="Search Keywards">
         </form>
-        <div id="TagSelector">
-            <h5>Tags</h5>
-            <ul>
+        <nav class="Tag">
+            <span>Tags</span>
+            <ul class="Selector">
                 {% for tag in tags %}
                 <li>
-                    <span id="{{tag}}" class="Tag">{{tag}}</span>
+                    <div id="{{tag}}" class="Tag">
+                        <span>{{tag}}</span>
+                        <img src="./icons/delete.png" title="delete this tag"/>
+                    </div>
                 </li>
                 {% endfor %}
                 <li>
                     <span id="ResetTag" class="Tag">reset</span>
                 </li>
             </ul>
-        </div>
-        <div id="TagAdd">
-            <input type="text" placeholder="Tag Name"/>
-            <input type="button" value="create Tag"/>
-        </div>
+            <div id="TagAdd">
+                <input type="text" placeholder="Tag Name"/>
+                <input type="button" value="create" title="Create a new tag(reload requires)"/>
+            </div>
+        </nav>
         </nav>
         {% for entry in entries %}
         <div id='{{entry["key"]}}' class="Article">
@@ -40,12 +43,23 @@
                 <li>Journal: {{entry["journal"]}}</li>
                 <li>Published Year: {{entry["year"]}}</li>
             </ul>
-            <div class="ArticleTag">
-                {% for tag in entry["tags"] %}
-                    <span class="ArticleTag">{{tag}}</span>
-                {% endfor %}
-                <div class="AddArticleTag"></div>
-            </div>
+            <nav class="ArticleTag">
+                <span>Tags of article</span>
+                <ul class="ArticleTagList">
+                    {% for tag in entry["tags"] %}
+                    <li>
+                        <div id="{{tag}}" class="ArticleTag">
+                            <span>{{tag}}</span>
+                            <img src="./icons/delete.png" title="delete this tag"/>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="AddArticleTag">
+                    <input type="text" placeholder="Tag Name"/>
+                    <input type="button" value="create" title="Create a new article tag(reload requires)"/>
+                </div>
+            </nav>
         </div>
         {% endfor %}
     </body>

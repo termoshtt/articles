@@ -1,10 +1,14 @@
 
 #PageTitle{}
 
-span.Tag{
+div.Tag span{
     cursor: pointer;
 }
 
 span.ArticleTag{
+    cursor: pointer;
+}
+
+nav span{
     cursor: pointer;
 }
