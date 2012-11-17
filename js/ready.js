@@ -35,12 +35,12 @@ $(function(){
     /* toggle input forms */
     $("nav.Tag>span")
         .bind("click",function(event){
-            $("nav.Tag ul.Selector").toggle();
-            $("nav.Tag div#TagAdd").toggle();
+            $(this).siblings().toggle();
         });
     $("nav.ArticleTag>span")
         .bind("click",function(event){
-            $("nav.ArticleTag ul.ArticleTagList").toggle();
-            $("nav.ArticleTag div.AddArticleTag").toggle();
-        })
+            $(this).siblings().toggle();
+        });
+    $("nav.ArticleTag>ul").toggle();
+    $("nav.ArticleTag>div").toggle();
 });
