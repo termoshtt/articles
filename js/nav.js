@@ -64,15 +64,6 @@ function _disable_tag(tag){
     $("div.Tag>span:contains("+tag+")").css("color","black");
 }
 
-function _send_to_cgi(action,name,key=""){
-    $.post("http://localhost:8000/cgi-bin/tag.cgi",
-            {
-                "TagAction" : action,
-                "TagName" : name,
-                "BibTeXKey" : key,
-            });
-}
-
 function create_tag(name){
     _send_to_cgi("CreateTag",name);
     alert("Tag created. Please reload");
