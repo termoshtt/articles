@@ -89,6 +89,14 @@ After installed, you can start a CGI server as:
     ./start.py
 ```
 This script wait requests until you kill this script.
+If you want only to generate articles.html i.e. not to start CGI server,
+```shell
+    ./start.py -n
+```
+Other options are displayed with
+```shell
+    ./start.py -h
+```
 Since tagging feature is implemented as a CGI,
 the tagging cannot use unless the CGI server stands.
 In other word, searching and tag choosing can be used without the CGI server.
@@ -99,4 +107,7 @@ The CGI server can daemonize by option -d:
     ./start.py -d
 ```
 This feature have not fully tested.
+
+## use for iPad(GoodReader)
+to be written...
 
