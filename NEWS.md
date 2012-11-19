@@ -10,6 +10,22 @@ News for articles
 
 ## News
 
+v0.9.4
+-------
+* BUG append some explanation about how to open .html
+
+v0.9.3(pull request #5)
+-------
+* BUG fix for nav.js
+
+v0.9.2
+-------
+* BUG append icons to install
+
+v0.9.1
+-------
+* BUG refine spells
+
 v0.9
 -----
 * MOD switch to static HTML page from CGI.

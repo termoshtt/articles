@@ -72,11 +72,30 @@ if you do not want to place ~/.articles.ini, you can use other configure file:
 
 Up to here, the installation is finished.
 You can find articles.html (or name you set) in your install directory.
+Let's open your articles.html with your favorite browser.
+If you like Firefox,
+```shell
+    firefox path/to/articles.html
+```
+or enter 
+```
+    file:///home/yourname/path/to/articles.html
+```
+into your navigation toolbar.
 
-### normal use
+### start to use
 After installed, you can start a CGI server as:
 ```shell
     ./start.py
+```
+This script wait requests until you kill this script.
+If you want only to generate articles.html i.e. not to start CGI server,
+```shell
+    ./start.py -n
+```
+Other options are displayed with
+```shell
+    ./start.py -h
 ```
 Since tagging feature is implemented as a CGI,
 the tagging cannot use unless the CGI server stands.
@@ -88,4 +107,7 @@ The CGI server can daemonize by option -d:
     ./start.py -d
 ```
 This feature have not fully tested.
+
+## use for iPad(GoodReader)
+to be written...
 
