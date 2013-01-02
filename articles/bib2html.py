@@ -2,13 +2,12 @@
 # coding=utf-8
 
 from pybtex.database.input import bibtex
-from jinja2 import Template
 import dbio
-def convert(g_cfg):
+def read_bibtex(bib_filename,db_filename):
     parser = bibtex.Parser()
-    bib_data = parser.parse_file(g_cfg["bib_file"])
+    bib_data = parser.parse_file(bib_filename)
     entries = []
-    art_db = dbio.articles_db(g_cfg["db_file"])
+    art_db = dbio.articles_db(db_filename)
     for key in bib_data.entries:
         try:
             persons = bib_data.entries[key].persons[u'author']
@@ -27,7 +26,15 @@ def convert(g_cfg):
         if tags:
             entry.update({ u"tags" : tags, })
         entries.append(entry)
-    
+    return entries
+
+from jinja2 import Template
+def convert(g_cfg):
+    bib_filename = g_cfg["bib_file"]
+    db_filename = g_cfg["db_file"]
+    entries = read_bibtex(bib_filename,db_filename)
+    art_db = dbio.articles_db(db_filename)
+
     cfg = {}
     cfg.update({u'title' : u'Articles',})
     cfg.update({u'tags' : art_db.tags(),})
