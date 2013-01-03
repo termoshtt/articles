@@ -1,11 +1,10 @@
-let g:unite_bibtex_articles_directory = '~/workspace/articles'
 
 let s:unite_source = {
     \ "name" : "bibtex",
     \}
 
 function! s:unite_source.gather_candidates(args,context)
-    let bib_src = unite#util#system(g:articles_directory . '/bibtex_source.py')
+    let bib_src = unite#util#system(g:unite_bibtex_articles_directory . '/bibtex_source.py')
     let lines = split(bib_src,'\n')
     let key = []
     let desc = []
