@@ -1,25 +1,6 @@
 #!/usr/bin/python2 
 # coding=utf-8
 
-import ConfigParser
-def read_configure_file(filename):
-    parser = ConfigParser.SafeConfigParser()
-    parser.read(filename)
-    config = {}
-    config["bib_file"]      = _read_path(parser,"bib")
-    config["output"]        = _read_path(parser,"output_dir")
-    config["template_file"] = parser.get("name","template")
-    config["db_file"]       = parser.get("name","database")
-    config["html_file"]     = parser.get("name","html")
-    config["port"]          = int(parser.get("server","port"))
-    return config
-
-def _read_path(parser,dest):
-    path = parser.get("path",dest)
-    if os.path.exists(path):
-        raise Warning("Path does not found : destination = %s, value = %s" % (dest,path))
-    return os.path.expanduser(path)
-
 import shutil
 import urllib2
 def copy_attachment(config):
@@ -51,7 +32,7 @@ def start_CGI_server(config):
 
 import os.path
 from optparse import OptionParser
-from articles import bib2html
+from articles import bib2html,configure
 def main():
     opt_parser = OptionParser()
     opt_parser.add_option("-c","--config",action="store",type="string",
@@ -65,18 +46,19 @@ def main():
     if not os.path.exists(config_file):
         print("configure file does not exists : " + config_file)
         return -1
-    config = read_configure_file(config_file)
+    config = configure.read(config_file)
 
     bib2html.generate(config)
     if option.install:
         copy_attachment(config)
+        return
 
-    pid_filename = "/tmp/articles.pid"
-    log_filename = "server.log"
     if not option.nocgi:
         if option.daemonize and not os.path.exists(pid_filename):
             from daemon import DaemonContext
             from daemon.pidfile import PIDLockFile
+            pid_filename = "/tmp/articles.pid"
+            log_filename = "server.log"
             dc = DaemonContext(
                     pidfile = PIDLockFile(pid_filename),
                     stderr = open(log_filename,"w+"),

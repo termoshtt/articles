@@ -10,6 +10,11 @@ News for articles
 
 ## News
 
+v0.10
+------
+* NEW add bibtex source for unite.vim
+* MOD change path of database file to output dir (for sync)
+
 v0.9.4
 -------
 * BUG append some explanation about how to open .html
