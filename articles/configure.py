@@ -16,8 +16,8 @@ def read(filename):
     config["bib_file"]      = _read_path(parser,"bib")
     config["output"]        = _read_path(parser,"output_dir")
     config["template_file"] = parser.get("name","template")
-    config["db_file"]       = parser.get("name","database")
     config["html_file"]     = parser.get("name","html")
     config["port"]          = int(parser.get("server","port"))
+    config["db_file"] = os.path.join(config["output"],parser.get("name","database"))
     return config
 
