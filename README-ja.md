@@ -70,5 +70,16 @@ jinja2はパッケージ管理アプリケーション(yum,apt等)によって
 ```shell
     ./start.py -i -c /path/to/your/ini
 ```
+以上で[path.outputdir]にarticles.html他必要なものがコピーされる。
+これでお気に入りのブラウザで
+```
+    file:///home/yourname/path/to/articles.html
+```
+を開けば論文のリストが閲覧できる。
 
+次回以降に.htmlを更新するには
+```shell
+    ./start.py -n
+```
+とする。
 
