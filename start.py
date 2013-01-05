@@ -53,12 +53,12 @@ def main():
         copy_attachment(config)
         return
 
+    pid_filename = "/tmp/articles.pid"
+    log_filename = "server.log"
     if not option.nocgi:
         if option.daemonize and not os.path.exists(pid_filename):
             from daemon import DaemonContext
             from daemon.pidfile import PIDLockFile
-            pid_filename = "/tmp/articles.pid"
-            log_filename = "server.log"
             dc = DaemonContext(
                     pidfile = PIDLockFile(pid_filename),
                     stderr = open(log_filename,"w+"),
