@@ -31,11 +31,11 @@ jinja2はパッケージ管理アプリケーション(yum,apt等)によって
 導入できるでしょう。
 しかしpybtexはあまりメジャーではないので、
 見つからない事があるでしょう。
-幸運にもpybtexではeasy-installが使用できるため、
-次のようにしてインストールできます。
+幸運にもpybtexではeasy-installによってインストールする事が可能です。
 ```shell
-# easy-install pybtex
+easy-install pybtex
 ```
+(通常、管理者権限が必要です)
 
 ## インストール手順 (Linux)
 インストール作業を始める前にjinja2,pybtexをインストールしておいて下さい。
@@ -57,6 +57,7 @@ jinja2はパッケージ管理アプリケーション(yum,apt等)によって
 * [name.html]       : 生成されるHTMLの名前
 * [name.database]   : タグの情報を保管するデータベースの名前
 * [server.port]     : CGIサーバーのポート番号
+
 設定を変更したら.htmlを生成し、必要な物をコピーします。
 ```shell
     ./start.py --install
