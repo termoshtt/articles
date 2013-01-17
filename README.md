@@ -10,7 +10,7 @@ and an articles searching function is implemented by JavaScript.
 The WebApp can be used alone,
 but a tagging feature is available if you use CGI server simultaneously.
 After you add tags to your articles, 
-since these tagging informations are also saved into HTML file,
+since these tagging information are also saved into HTML file,
 you can use tag-search feature in WebApp alone.
 Using this project,
 You can view the information of articles saved in BibTeX file by your favor web browser.
@@ -24,9 +24,9 @@ This may work on Mac or other UNIX system, but not tested.
 
 ## necessaries (BibTeX key)
 In order to use link embedded in HTML articles list,
-the filename of PDF files must be in the form '[bibtexkey].pdf'.
+the file name of PDF files must be in the form '[bibtexkey].pdf'.
 ([bibtexkey] represents the BibTeX key of the article.)
-Since it is too hard to provide filename converter, please rename by your own.
+Since it is too hard to provide file name converter, please rename by your own.
 
 ## dependencies
 The most part of this project is written in python2,
@@ -41,7 +41,7 @@ Fortunately, pybtex can be installed by easy-install
 ```shell
     easy-install pybtex
 ```
-(usually root authorication is needed.)
+(usually root authorization is needed.)
 
 ## procedure for install (Linux)
 
@@ -95,31 +95,55 @@ you can update HTML file by
     ./start.py -n
 ```
 
-### start to use
-After installed, you can start a CGI server as:
+# Usage
+
+## link to .pdf
+As mentioned above, 
+please the file name of PDF files be '[bibtexkey].pdf'.
+In order to enable linking from HTML to .pdf files,
+.pdf files have to place under [path.outputdir]/pdf directory.
+
+## tagging articles
+You have to stand CGI server in order to use tagging feature,
+but you do not have to stand full-featured server like Apache,nginx,etc.
+A simple CGI server library for testing CGI script is included
+in the official distribution of python,
+and use this library in this project.
+
+The CGI server stands also by start.py:
 ```shell
     ./start.py
 ```
-This script wait requests until you kill this script.
-If you want only to generate articles.html i.e. not to start CGI server,
-```shell
-    ./start.py -n
-```
-Other options are displayed with
-```shell
-    ./start.py -h
-```
-Since tagging feature is implemented as a CGI,
-the tagging cannot use unless the CGI server stands.
-In other word, searching and tag choosing can be used without the CGI server.
+Then the .html file is updated and CGI server stands.
+This process wait CGI request until you kill this process,
+so you terminate this process by Ctrl-C or kill command.
 
-(experimental)
-The CGI server can daemonize by option -d:
-```shell
-    ./start.py -d
-```
-This feature have not fully tested.
+A navigator appears when you click the text "Tags of articles"
+placed under the information of articles in WebApp.
+Then you can put a tag on the article
+by create button with the tag name entered into the text area "Tag Name".
+After put tags, you can narrow the articles down to tagged articles.
 
-## use for iPad(GoodReader)
-to be written...
+## use in iPad/GoodReader
+Here, the usage of this application in iPad will be explained shortly.
+_GoodReader_ is a good PDF reader on iPad(iOS).
 
+### use WebApp alone
+Since _GoodReader_ can read HTML,
+WebApp is usable on _GoodReader_ only sync the directory [path.outputdir].
+The sync can be done through online storage services, 
+such as Dropbox, Google Drive, etc.
+If you do not want to use such service, you can also use ssh(sftp).
+Since sftp use ssh server,
+you need not to stand new server except for ssh server.
+The WebApp starts on _GoodReader_ by opening articles.html,
+and you can use the links to articles.
+
+### use with CGI server
+Since there is no way to stand CGI server on iPad,
+it is necessary to stand a server out of iPad.
+In this version, the address to cgi is hard coded,
+so you have to rewrite this part or use iSSH or other ssh client to port forwarding.
+
+# License
+BSD 2-Clause License
