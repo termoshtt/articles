@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python
 # coding=utf-8
 
 import cgitb
@@ -66,4 +66,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
