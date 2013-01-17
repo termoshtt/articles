@@ -17,8 +17,7 @@ You can view the information of articles saved in BibTeX file by your favor web 
 Since a static HTML is generated,
 it can be used on iPad or other tablet PCs same as on the PC.
 
-This application supports Linux only now.
-This may work on Mac or other UNIX system, but not tested.
+In this version this application is developed on Fedora17 and Mac OS X 10.8.
 
 # Install
 
@@ -146,4 +145,4 @@ In this version, the address to cgi is hard coded,
 so you have to rewrite this part or use iSSH or other ssh client to port forwarding.
 
 # License
-BSD 2-Clause License
+BSD 3-Clause License
