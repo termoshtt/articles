@@ -1,55 +1,52 @@
 articles
--------------------------
+=========
 
-A bibtex based article manager
+An article manager based on BibTeX
 
 # Features
-This is a HTML article manager based on BibTeX.
-A HTML involving the information of articles is generated from BibTeX file,
-and some managing features, searching, tagging, are implemented by JavaScript.
-The tagging data are saved on a server,
-so this project serve a HTML generator and simple CGI server.
+This application is an article manager composed of WebApp(HTML+JavaScript) and CGI server.
+This generate a HTML containing the information of articles from a BibTeX file,
+and an articles searching function is implemented by JavaScript.
+The WebApp can be used alone,
+but a tagging feature is available if you use CGI server simultaneously.
+After you add tags to your articles, 
+since these tagging information are also saved into HTML file,
+you can use tag-search feature in WebApp alone.
 Using this project,
 You can view the information of articles saved in BibTeX file by your favor web browser.
-Since a static HTML is given,
+Since a static HTML is generated,
 it can be used on iPad or other tablet PCs same as on the PC.
 
+In this version this application is developed on Fedora17 and Mac OS X 10.8.
+
 # Install
+
+## necessaries (BibTeX key)
+In order to use link embedded in HTML articles list,
+the file name of PDF files must be in the form '[bibtexkey].pdf'.
+([bibtexkey] represents the BibTeX key of the article.)
+Since it is too hard to provide file name converter, please rename by your own.
+
 ## dependencies
 The most part of this project is written in python2,
 and depends on the following libraries.
-* pybtex
-* jinja2
+* pybtex : parse BibTeX source
+* jinja2 : generate HTML
 
 For famous distribution of Linux, at least on Fedora,
 jinja2 can be found in the package manager (yum,apt,..).
-However, pybtex might not be found,
-so you have to install it manually.
+However, pybtex might not be found, so you have to install it manually.
 Fortunately, pybtex can be installed by easy-install
-    # easy-install pybtex
+```shell
+    easy-install pybtex
+```
+(usually root authorization is needed.)
 
-## usage
-This script needs some configure values:
-* [path.bib]        : the path for .bib file
-* [path.outputdir]  : the path where you want to install .html and js/, css/, icons/
-* [name.template]   : the name of template file used to generate HTML from .bib file
-* [name.html]       : the name of generated HTML
-* [name.database]   : the name of database that contains the tagging information
-* [server.port]     : the port of CGI server
+## procedure for install (Linux)
 
-These values are defined in ~/.articles.ini (default).
-The sample of this configuration file is given in sample.ini.
-
-*In order to use the link of HTML, the PDF files should place in outputdir/pdf/
-and name as [bibtexkey].pdf.*
-
-The main script is start.py.
-This script can install necessaries and generate HTML to destination directory,
-and also work as a CGI server.
-
-### install (Linux)
 Before install this program, please install pybtex and jinja2.
-At first, you get the source code of this program:
+
+At first, please get the source code of this project:
 ```shell
     git clone http://github.com/termoshtt/ariticles.git
 ```
@@ -60,18 +57,26 @@ Next go into the directory and copy the configure file to your $HOME:
     cp sample.ini ~/.articles.ini
 ```
 You should modify the configure file now.
+* [path.bib]        : the path for .bib file
+* [path.outputdir]  : the path where you want to install .html and js/, css/, icons/
+* [name.template]   : the name of template file used to generate HTML from .bib file
+* [name.html]       : the name of generated HTML
+* [name.database]   : the name of database that contains the tagging information
+* [server.port]     : the port of CGI server
+
 After configuration, generate HTML and copy js/, css/, icons/ to your install directory.
 ```shell
-    ./start.py --install --no-cgi-server
+    ./start.py --install
 ```
 if you do not want to place ~/.articles.ini, you can use other configure file:
 ```shell
-    ./start.py -i -n -c path/to/configure.ini
+    ./start.py -i -c path/to/configure.ini
 ```
---install can be abbreviate by -i and --no-cgi-server by -n.
+(--install can be abbreviate by -i)
 
 Up to here, the installation is finished.
-You can find articles.html (or name you set) in your install directory.
+You can find articles.html (or name you set) in your install directory 
+i.e. [path.outputdir].
 Let's open your articles.html with your favorite browser.
 If you like Firefox,
 ```shell
@@ -83,31 +88,61 @@ or enter
 ```
 into your navigation toolbar.
 
-### start to use
-After installed, you can start a CGI server as:
-```shell
-    ./start.py
-```
-This script wait requests until you kill this script.
-If you want only to generate articles.html i.e. not to start CGI server,
+When the BibTeX file updated,
+you can update HTML file by
 ```shell
     ./start.py -n
 ```
-Other options are displayed with
+
+# Usage
+
+## link to .pdf
+As mentioned above, 
+please the file name of PDF files be '[bibtexkey].pdf'.
+In order to enable linking from HTML to .pdf files,
+.pdf files have to place under [path.outputdir]/pdf directory.
+
+## tagging articles
+You have to stand CGI server in order to use tagging feature,
+but you do not have to stand full-featured server like Apache,nginx,etc.
+A simple CGI server library for testing CGI script is included
+in the official distribution of python,
+and use this library in this project.
+
+The CGI server stands also by start.py:
 ```shell
-    ./start.py -h
+    ./start.py
 ```
-Since tagging feature is implemented as a CGI,
-the tagging cannot use unless the CGI server stands.
-In other word, searching and tag choosing can be used without the CGI server.
+Then the .html file is updated and CGI server stands.
+This process wait CGI request until you kill this process,
+so you terminate this process by Ctrl-C or kill command.
 
-(experimental)
-The CGI server can daemonize by option -d:
-```shell
-    ./start.py -d
-```
-This feature have not fully tested.
+A navigator appears when you click the text "Tags of articles"
+placed under the information of articles in WebApp.
+Then you can put a tag on the article
+by create button with the tag name entered into the text area "Tag Name".
+After put tags, you can narrow the articles down to tagged articles.
 
-## use for iPad(GoodReader)
-to be written...
+## use in iPad/GoodReader
+Here, the usage of this application in iPad will be explained shortly.
+_GoodReader_ is a good PDF reader on iPad(iOS).
 
+### use WebApp alone
+Since _GoodReader_ can read HTML,
+WebApp is usable on _GoodReader_ only sync the directory [path.outputdir].
+The sync can be done through online storage services, 
+such as Dropbox, Google Drive, etc.
+If you do not want to use such service, you can also use ssh(sftp).
+Since sftp use ssh server,
+you need not to stand new server except for ssh server.
+The WebApp starts on _GoodReader_ by opening articles.html,
+and you can use the links to articles.
+
+### use with CGI server
+Since there is no way to stand CGI server on iPad,
+it is necessary to stand a server out of iPad.
+In this version, the address to cgi is hard coded,
+so you have to rewrite this part or use iSSH or other ssh client to port forwarding.
+
+# License
+BSD 3-Clause License
