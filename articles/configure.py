@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python
 # coding=utf-8
 
 import os.path
@@ -20,4 +20,3 @@ def read(filename):
     config["port"]          = int(parser.get("server","port"))
     config["db_file"] = os.path.join(config["output"],parser.get("name","database"))
     return config
-
