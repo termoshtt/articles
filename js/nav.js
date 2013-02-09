@@ -44,6 +44,7 @@ function tag_select(tag){
         for(tag in g_tags){
             _disable_tag(tag);
         }
+        $("#SearchForm [name=SearchKeyWard]").val('');
     }else{
         if(tag in g_tags && g_tags[tag]){
             _disable_tag(tag);
