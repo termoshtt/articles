@@ -62,4 +62,4 @@ def doi2bib(doi):
     url = uri +  edoi
     req = urllib2.Request(url, headers = {"Accept":"text/bibliography; style=bibtex"})
     html = urllib2.urlopen(req).read()
-    print html
+    return html
