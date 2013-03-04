@@ -10,7 +10,7 @@ def main ():
 
 
 def auto_update_bib(g_cfg):
-    import glob, os.path
+    import glob, os
     pdf_path = g_cfg["output_dir"]
     pdfkeys = [ext_key(pdf) for pdf in list(glob.glob(os.path.join(pdf_path, "*pdf")))]
 
@@ -27,6 +27,10 @@ def auto_update_bib(g_cfg):
     bibstr = ""
     for pdfname in dois.keys():
         bibstr = getbib.doi2bib(dois[pdfname])
+        bibkey = bibManager.parse_str(bibstr).entries.keys()[0]
+        oldpdf = os.path.join(pdf_path, pdfname)
+        newpdf = os.path.join(pdf_path, bibkey + ".pdf")
+        os.rename(oldpdf, newpdf)
         bibManager.add_bibfile(g_cfg["bib_file"], bibstr)
     return
 

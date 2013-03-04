@@ -12,10 +12,7 @@ def add_bib2db(bibdb, bibstring, noerror=True):
     Add bibstring (bibtex file format string) to bibtex database.
     If NOERROR is False, throw a exception for capturing duplicate bibtexkey.
     """
-    from pybtex.database.input import bibtex
-    parser = bibtex.Parser()
-    from io import StringIO
-    addbib = parser.parse_stream(StringIO(bibstring))
+    addbib = parse_str(bibstring)
 
     if not noerror:
         for key in addbib.entries:
@@ -42,3 +39,10 @@ def read_bibdb(input_file):
      from pybtex.database.input import bibtex
      parser = bibtex.Parser()
      return parser.parse_file(input_file)
+
+
+def parse_str(string):
+    from pybtex.database.input import bibtex
+    from io import StringIO
+    parser = bibtex.Parser()
+    return parser.parse_stream(StringIO(string))
