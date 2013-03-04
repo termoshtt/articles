@@ -31,7 +31,7 @@ def auto_update_bib(g_cfg):
         oldpdf = os.path.join(pdf_path, pdfname)
         newpdf = os.path.join(pdf_path, bibkey + ".pdf")
         os.rename(oldpdf, newpdf)
-        bibManager.add_bibfile(g_cfg["bib_file"], bibstr)
+        bibManager.add_bibfile(g_cfg["bib_file"], bibstr, False)
     return
 
 
