@@ -32,7 +32,7 @@ def start_CGI_server(config):
 
 import os.path
 from optparse import OptionParser
-from articles import bib2html,configure
+from articles import bib2html,configure,autoUpdatebib
 def main():
     opt_parser = OptionParser()
     opt_parser.add_option("-c","--config",action="store",type="string",
@@ -48,6 +48,7 @@ def main():
         return -1
     config = configure.read(config_file)
 
+    autoUpdatebib.update(config, silent=False)
     bib2html.generate(config)
     if option.install:
         copy_attachment(config)
