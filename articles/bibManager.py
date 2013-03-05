@@ -1,9 +1,9 @@
-def add_bibfile(bibfile, bibstring):
+def add_bibfile(bibfile, bibstring, noerror=True):
     """
     Add bibtex file format string(BIBSTRING) to BIBFILE.
     """
     bibdb = read_bibdb(bibfile)
-    bibdb = add_bib2db(bibdb, bibstring)
+    bibdb = add_bib2db(bibdb, bibstring, noerror)
     write_bibdb(bibdb, bibfile)
 
 

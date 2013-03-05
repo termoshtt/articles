@@ -4,7 +4,7 @@ def extractDOI(pdfs, log = "/tmp/extractDOI.log"):
     PDFS is list of pdffile path specified with either abs or relative.
     LOG specify the file where pdffile name failed to extract DOI is written.
     """
-    import os.path
+    import os
     logf = open(log, "w")
     dic = {}
     for pdf in pdfs:
@@ -13,6 +13,7 @@ def extractDOI(pdfs, log = "/tmp/extractDOI.log"):
         try:
             text = pdf2text(pdf)
             doi = parseDOI(text)
+            os.remove(text)
             dic[os.path.basename(pdf)] = doi
         except:
             string = os.path.basename(pdf) + ": DOI is not found.\n"
@@ -62,4 +63,4 @@ def doi2bib(doi):
     url = uri +  edoi
     req = urllib2.Request(url, headers = {"Accept":"text/bibliography; style=bibtex"})
     html = urllib2.urlopen(req).read()
-    return html
+    return unicode(html, "utf-8")
