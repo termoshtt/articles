@@ -48,7 +48,8 @@ def checkbibfile(g_cfg):
     import glob, os
 
     def ext_key(pdfpath):
-        return os.path.basename(pdfpath).rstrip(u".pdf")
+        return os.path.splitext(os.path.basename(pdfpath))[0]
+
 
     nobib_list = []
     pdf_path = os.path.join(g_cfg[u"output"], u"pdf")

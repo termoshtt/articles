@@ -9,13 +9,12 @@ def extractDOI(pdfs, log = "/tmp/extractDOI.log"):
     dic = {}
     for pdf in pdfs:
         pdf = os.path.abspath(pdf)
-        pdf2text(pdf)
         try:
             text = pdf2text(pdf)
             doi = parseDOI(text)
             os.remove(text)
             dic[os.path.basename(pdf)] = doi
-        except:
+        except Warning:
             string = os.path.basename(pdf) + ": DOI is not found.\n"
             logf.write(string)
 
