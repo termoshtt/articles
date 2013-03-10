@@ -20,8 +20,8 @@ def write(bib,filename,Replace=False):
     import tempfile  # use tempfile in order to save original .bib file
     tmpfilename = tempfile.mkstemp()[1]
     writer.write_file(bib,tmpfilename) # this may raise a exception
-    os.rename(tmpfilename,filename)
-    os.remove(tmpfilename)
+    import shutil
+    shutil.move(tmpfilename,filename)
 
 def merge(bibfrom,bibto,SkipRepeated=True):
     for key in bibfrom.entries:

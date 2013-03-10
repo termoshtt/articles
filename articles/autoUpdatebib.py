@@ -2,14 +2,14 @@
 
 import pdf2bib,bibio
 
-def extractDOI(pdfs, log = "/tmp/extractDOI.log"):
+import sys
+def extractDOI(pdfs,logf=sys.stdout):
     """
     extract DOI from pdfs
     PDFS is list of pdffile path specified with either abs or relative.
     LOG specify the file where pdffile name failed to extract DOI is written.
     """
     import os
-    logf = open(log, "w")
     dic = {}
     for pdf in pdfs:
         pdf = os.path.abspath(pdf)
@@ -21,8 +21,6 @@ def extractDOI(pdfs, log = "/tmp/extractDOI.log"):
         except Warning:
             string = os.path.basename(pdf) + ": DOI is not found.\n"
             logf.write(string)
-
-    logf.close()
     return dic
 
 def update(g_cfg, silent=True):
