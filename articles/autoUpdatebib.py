@@ -29,11 +29,10 @@ def update(g_cfg, silent=True):
     """
     search pdf without bibfile and add bibfile to bib_file specified by config file
     """
-
     import os
     pdf_path = os.path.join(g_cfg["output"], u"pdf")
 
-    nobib_pdfs = checkbibfile(g_cfg)
+    nobib_pdfs = check_bib(g_cfg)
     if nobib_pdfs != [] and not silent:
         for pdf in nobib_pdfs:
             print(pdf)
@@ -45,9 +44,7 @@ def update(g_cfg, silent=True):
         else:
             print "Try to updated bibfile."
 
-
     dois = extractDOI(nobib_pdfs)
-
     bibstr = u""
     for pdfname in dois.keys():
         oldpdf = os.path.join(pdf_path, pdfname)
@@ -75,25 +72,20 @@ def update(g_cfg, silent=True):
             print(e)
             print("skip this pdf")
             continue
-        except:
+        except Exception,e:
             print("Unknown error occurs while writing bib info into file")
             print(e)
             print("skip this pdf")
             continue
     return
 
-
-def checkbibfile(g_cfg):
+def check_bib(g_cfg):
     """
     search pdf file without bibfile
     """
-
     import glob, os
-
     def ext_key(pdfpath):
         return os.path.splitext(os.path.basename(pdfpath))[0]
-
-
     nobib_list = []
     pdf_path = os.path.join(g_cfg[u"output"], u"pdf")
     pdfkeys = [ext_key(pdf) for pdf in list(glob.glob(os.path.join(pdf_path, u"*pdf")))]
@@ -103,3 +95,4 @@ def checkbibfile(g_cfg):
         if not pdfkey in bibkeys:
             nobib_list.append(pdfkey)
     return [os.path.join(pdf_path, pdfkey + u".pdf") for pdfkey in nobib_list]
+
