@@ -93,3 +93,9 @@ function untagging(name,key){
     _send_to_cgi("unTagging",name,key);
     alert("unTagging. Please reload");
 }
+
+function update_html(){
+    $.post("http://localhost:8000/cgi-bin/update.cgi",{
+        "TagAction" : "update",
+    });
+}

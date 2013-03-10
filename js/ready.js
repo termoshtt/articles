@@ -43,4 +43,9 @@ $(function(){
         });
     $("nav.ArticleTag>ul").toggle();
     $("nav.ArticleTag>div").toggle();
+
+    $("button#UpdateButton")
+        .bind("click",function(event){
+            update_html();
+        });
 });
