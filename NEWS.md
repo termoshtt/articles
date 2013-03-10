@@ -10,6 +10,12 @@ News for articles
 
 ## News
 
+v0.12
+------
+* NEW merge pull request #7
+* MOD refactoring articles module
+* NEW write help
+
 v0.10
 ------
 * NEW add bibtex source for unite.vim
