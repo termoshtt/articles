@@ -36,10 +36,16 @@ from articles import bib2html,configure,autoUpdatebib
 def main():
     opt_parser = OptionParser()
     opt_parser.add_option("-c","--config",action="store",type="string",
-                          dest="config",default="~/.articles.ini")
-    opt_parser.add_option("-n","--no-cgi-server",action="store_true",dest="nocgi")
-    opt_parser.add_option("-d","--daemonize",action="store_true",dest="daemonize")
-    opt_parser.add_option("-i","--install",action="store_true",dest="install")
+            dest="config",default="~/.articles.ini",
+            help="specify the configure file [default:~/.articles.ini]")
+    opt_parser.add_option("-n","--no-cgi-server",action="store_true",dest="nocgi",
+            help="only generate HTML file (CGI server does not stand)")
+    opt_parser.add_option("-i","--install",action="store_true",dest="install",
+            help="install attachments (CGI server does not stand)")
+    opt_parser.add_option("-b","--getbib",action="store_true",dest="getbib",
+            help="get bib infos for .pdf files whose bibtexkey is absent in .bib file")
+    opt_parser.add_option("-d","--daemonize",action="store_true",dest="daemonize",
+            help="stand CGI server as a daemon process (experimental)")
     (option,args) = opt_parser.parse_args()
 
     config_file = os.path.expanduser(option.config)
@@ -48,8 +54,10 @@ def main():
         return -1
     config = configure.read(config_file)
 
-    autoUpdatebib.update(config,silent=False)
-    
+    if option.getbib:
+        autoUpdatebib.update(config,silent=False)
+        return
+
     bib2html.generate(config)
     if option.install:
         copy_attachment(config)
