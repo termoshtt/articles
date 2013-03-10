@@ -32,14 +32,20 @@ def start_CGI_server(config):
 
 import os.path
 from optparse import OptionParser
-from articles import bib2html,configure
+from articles import bib2html,configure,bibupdate
 def main():
     opt_parser = OptionParser()
     opt_parser.add_option("-c","--config",action="store",type="string",
-                          dest="config",default="~/.articles.ini")
-    opt_parser.add_option("-n","--no-cgi-server",action="store_true",dest="nocgi")
-    opt_parser.add_option("-d","--daemonize",action="store_true",dest="daemonize")
-    opt_parser.add_option("-i","--install",action="store_true",dest="install")
+            dest="config",default="~/.articles.ini",
+            help="specify the configure file [default:~/.articles.ini]")
+    opt_parser.add_option("-n","--no-cgi-server",action="store_true",dest="nocgi",
+            help="only generate HTML file (CGI server does not stand)")
+    opt_parser.add_option("-i","--install",action="store_true",dest="install",
+            help="install attachments (CGI server does not stand)")
+    opt_parser.add_option("-b","--getbib",action="store_true",dest="getbib",
+            help="get bib infos for .pdf files whose bibtexkey is absent in .bib file")
+    opt_parser.add_option("-d","--daemonize",action="store_true",dest="daemonize",
+            help="stand CGI server as a daemon process (experimental)")
     (option,args) = opt_parser.parse_args()
 
     config_file = os.path.expanduser(option.config)
@@ -47,6 +53,10 @@ def main():
         print("configure file does not exists : " + config_file)
         return -1
     config = configure.read(config_file)
+
+    if option.getbib:
+        bibupdate.update(config,silent=False)
+        return
 
     bib2html.generate(config)
     if option.install:

@@ -3,6 +3,8 @@ articles
 
 An article manager based on BibTeX
 
+If you are Japanese, see README-ja.md.
+
 # Features
 This application is an article manager composed of WebApp(HTML+JavaScript) and CGI server.
 This generate a HTML containing the information of articles from a BibTeX file,
@@ -41,6 +43,9 @@ Fortunately, pybtex can be installed by easy-install
     easy-install pybtex
 ```
 (usually root authorization is needed.)
+If you use --getbib (-b) option,
+*the version of pybtex must be 0.16 or later*.
+Package managers sometimes install the older version of pybtex.
 
 ## procedure for install (Linux)
 
