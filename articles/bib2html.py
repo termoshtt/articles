@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-from pybtex.database.input import bibtex
-import dbio
+import dbio,bibio
 def read_bibtex(g_cfg):
     bib_filename = g_cfg["bib_file"]
     db_filename = g_cfg["db_file"]
-    parser = bibtex.Parser()
-    bib_data = parser.parse_file(bib_filename)
+    bib_data = bibio.read_file(bib_filename)
     entries = []
     art_db = dbio.articles_db(db_filename)
     for key in bib_data.entries:
