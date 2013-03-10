@@ -54,7 +54,7 @@ def update(g_cfg, silent=True):
             if len(bib_new.entries.keys()) == 0:
                 raise Warning("bib data cannot be obtained")
             bibkey = bibio.read_str(bibstr).entries.keys()[0]
-        except Warning,e:
+        except Exception,e:
             print("catch a Warning while getting bib info:")
             print(e)
             print("skip this pdf")
@@ -65,11 +65,6 @@ def update(g_cfg, silent=True):
         os.rename(oldpdf, newpdf)
         try:
             bibio.add(bibstr,g_cfg[u"bib_file"])
-        except Warning,e:
-            print("catch a Warning while writing bib info into .bib file:")
-            print(e)
-            print("skip this pdf")
-            continue
         except Exception,e:
             print("Unknown error occurs while writing bib info into file")
             print(e)
