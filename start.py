@@ -48,7 +48,8 @@ def main():
         return -1
     config = configure.read(config_file)
 
-    autoUpdatebib.update(config, silent=False)
+    autoUpdatebib.update(config,silent=False)
+    
     bib2html.generate(config)
     if option.install:
         copy_attachment(config)

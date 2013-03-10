@@ -11,10 +11,17 @@ def read_str(bibstr):
     parser = bibtex.Parser()
     return parser.parse_stream(StringIO(bibstr))
 
-def write(bib,filename):
+def write(bib,filename,Replace=False):
+    import os.path
+    if os.path.exists(filename) and not Replace:
+        raise Warning("File exists")
     from pybtex.database.output import bibtex
     writer = bibtex.Writer()
-    writer.write_file(bib,filename)
+    import tempfile  # use tempfile in order to save original .bib file
+    tmpfilename = tempfile.mkstemp()[1]
+    writer.write_file(bib,tmpfilename) # this may raise a exception
+    os.rename(tmpfilename,filename)
+    os.remove(tmpfilename)
 
 def merge(bibfrom,bibto,SkipRepeated=True):
     for key in bibfrom.entries:
@@ -26,5 +33,5 @@ def add(bibstr,filename,SkipRepeated=True):
     bibfrom = read_str(bibstr)
     bibto = read_file(filename)
     merge(bibfrom,bibto,SkipRepeated)
-    write(bibto,filename)
+    write(bibto,filename,Replace=True)
 

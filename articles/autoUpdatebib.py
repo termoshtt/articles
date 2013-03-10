@@ -1,6 +1,6 @@
 #encoding:utf-8
 
-import getbib, bibManager
+import pdf2bib,bibio
 
 def extractDOI(pdfs, log = "/tmp/extractDOI.log"):
     """
@@ -14,8 +14,8 @@ def extractDOI(pdfs, log = "/tmp/extractDOI.log"):
     for pdf in pdfs:
         pdf = os.path.abspath(pdf)
         try:
-            text = pdf2text(pdf)
-            doi = parseDOI(text)
+            text = pdf2bib.pdf2text(pdf)
+            doi = pdf2bib.pick_out_doi(text)
             os.remove(text)
             dic[os.path.basename(pdf)] = doi
         except Warning:
@@ -53,13 +53,33 @@ def update(g_cfg, silent=True):
         oldpdf = os.path.join(pdf_path, pdfname)
         if not silent:
             print(oldpdf + "'s bibfile is update")
-        bibstr = getbib.doi2bib(dois[pdfname])
-        bibkey = bibManager.parse_str(bibstr).entries.keys()[0]
+        try:
+            bibstr = pdf2bib.doi2bib(dois[pdfname])
+            bib_new = bibio.read_str(bibstr)
+            if len(bib_new.entries.keys()) == 0:
+                raise Warning("bib data cannot be obtained")
+            bibkey = bibio.read_str(bibstr).entries.keys()[0]
+        except Warning,e:
+            print("catch a Warning while getting bib info:")
+            print(e)
+            print("skip this pdf")
+            continue
         newpdf = os.path.join(pdf_path, bibkey + u".pdf")
         if not silent:
             print("%s is renamed to %s" % (oldpdf.encode("utf-8"), newpdf.encode("utf-8")))
         os.rename(oldpdf, newpdf)
-        bibManager.add_bibfile(g_cfg[u"bib_file"], bibstr)
+        try:
+            bibio.add(bibstr,g_cfg[u"bib_file"])
+        except Warning,e:
+            print("catch a Warning while writing bib info into .bib file:")
+            print(e)
+            print("skip this pdf")
+            continue
+        except:
+            print("Unknown error occurs while writing bib info into file")
+            print(e)
+            print("skip this pdf")
+            continue
     return
 
 
@@ -77,7 +97,7 @@ def checkbibfile(g_cfg):
     nobib_list = []
     pdf_path = os.path.join(g_cfg[u"output"], u"pdf")
     pdfkeys = [ext_key(pdf) for pdf in list(glob.glob(os.path.join(pdf_path, u"*pdf")))]
-    bibdb =  bibManager.read_bibdb(g_cfg[u"bib_file"])
+    bibdb =  bibio.read_file(g_cfg[u"bib_file"])
     bibkeys = bibdb.entries.keys()
     for pdfkey in pdfkeys:
         if not pdfkey in bibkeys:
