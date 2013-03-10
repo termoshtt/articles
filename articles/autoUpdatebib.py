@@ -2,6 +2,29 @@
 
 import getbib, bibManager
 
+def extractDOI(pdfs, log = "/tmp/extractDOI.log"):
+    """
+    extract DOI from pdfs
+    PDFS is list of pdffile path specified with either abs or relative.
+    LOG specify the file where pdffile name failed to extract DOI is written.
+    """
+    import os
+    logf = open(log, "w")
+    dic = {}
+    for pdf in pdfs:
+        pdf = os.path.abspath(pdf)
+        try:
+            text = pdf2text(pdf)
+            doi = parseDOI(text)
+            os.remove(text)
+            dic[os.path.basename(pdf)] = doi
+        except Warning:
+            string = os.path.basename(pdf) + ": DOI is not found.\n"
+            logf.write(string)
+
+    logf.close()
+    return dic
+
 def update(g_cfg, silent=True):
     """
     search pdf without bibfile and add bibfile to bib_file specified by config file
@@ -23,7 +46,7 @@ def update(g_cfg, silent=True):
             print "Try to updated bibfile."
 
 
-    dois = getbib.extractDOI(nobib_pdfs)
+    dois = extractDOI(nobib_pdfs)
 
     bibstr = u""
     for pdfname in dois.keys():
