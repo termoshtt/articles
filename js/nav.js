@@ -29,6 +29,11 @@ function search(){
     // $(".ArticleDiv").show();
     show_articles();
     var keys = $("#SearchForm [name=SearchKeyWard]").val().split(/ +/);
+    for (var i = 0; i < keys.length; i++){
+        if (keys[i].length < 3) {
+            return;
+        }
+    }
     jQuery.expr[':'].insenseContains = function(a, i, m) {
         return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
     };
