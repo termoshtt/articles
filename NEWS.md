@@ -10,6 +10,10 @@ News for articles
 
 ## News
 
+### v0.13
+* NEW implement update HTML button
+* NEW implement register bib info from WebApp
+
 ### v0.12
 * NEW merge pull request #7
 * MOD refactoring articles module
