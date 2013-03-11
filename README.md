@@ -1,11 +1,10 @@
-articles
-=========
+If you are Japanese, see README-ja.md.
+
+# articles
 
 An article manager based on BibTeX
 
-If you are Japanese, see README-ja.md.
-
-# Features
+## Features
 This application is an article manager composed of WebApp(HTML+JavaScript) and CGI server.
 This generate a HTML containing the information of articles from a BibTeX file,
 and an articles searching function is implemented by JavaScript.
@@ -21,15 +20,15 @@ it can be used on iPad or other tablet PCs same as on the PC.
 
 In this version this application is developed on Fedora17 and Mac OS X 10.8.
 
-# Install
+## Install
 
-## necessaries (BibTeX key)
+### necessaries (BibTeX key)
 In order to use link embedded in HTML articles list,
 the file name of PDF files must be in the form '[bibtexkey].pdf'.
 ([bibtexkey] represents the BibTeX key of the article.)
 Since it is too hard to provide file name converter, please rename by your own.
 
-## dependencies
+### dependencies
 The most part of this project is written in python2,
 and depends on the following libraries.
 * pybtex : parse BibTeX source
@@ -47,7 +46,7 @@ If you use --getbib (-b) option,
 *the version of pybtex must be 0.16 or later*.
 Package managers sometimes install the older version of pybtex.
 
-## procedure for install (Linux)
+### procedure for install (Linux)
 
 Before install this program, please install pybtex and jinja2.
 
@@ -99,15 +98,15 @@ you can update HTML file by
     ./start.py -n
 ```
 
-# Usage
+## Usage
 
-## link to .pdf
+### link to .pdf
 As mentioned above, 
 please the file name of PDF files be '[bibtexkey].pdf'.
 In order to enable linking from HTML to .pdf files,
 .pdf files have to place under [path.outputdir]/pdf directory.
 
-## tagging articles
+### tagging articles
 You have to stand CGI server in order to use tagging feature,
 but you do not have to stand full-featured server like Apache,nginx,etc.
 A simple CGI server library for testing CGI script is included
@@ -128,11 +127,11 @@ Then you can put a tag on the article
 by create button with the tag name entered into the text area "Tag Name".
 After put tags, you can narrow the articles down to tagged articles.
 
-## use in iPad/GoodReader
+### use in iPad/GoodReader
 Here, the usage of this application in iPad will be explained shortly.
 _GoodReader_ is a good PDF reader on iPad(iOS).
 
-### use WebApp alone
+#### use WebApp alone
 Since _GoodReader_ can read HTML,
 WebApp is usable on _GoodReader_ only sync the directory [path.outputdir].
 The sync can be done through online storage services, 
@@ -143,11 +142,11 @@ you need not to stand new server except for ssh server.
 The WebApp starts on _GoodReader_ by opening articles.html,
 and you can use the links to articles.
 
-### use with CGI server
+#### use with CGI server
 Since there is no way to stand CGI server on iPad,
 it is necessary to stand a server out of iPad.
 In this version, the address to cgi is hard coded,
 so you have to rewrite this part or use iSSH or other ssh client to port forwarding.
 
-# License
+## License
 BSD 3-Clause License
