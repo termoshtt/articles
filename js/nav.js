@@ -65,7 +65,22 @@ function _disable_tag(tag){
     $("div.Tag>span:contains("+tag+")").css("color","black");
 }
 
-function _send_to_cgi(action,name,key){
+function update_html(){
+    $.post("http://localhost:8000/cgi-bin/main.cgi",{
+        "Action" : "UpdateHTML",
+    });
+    alert("update HTML. please reload.");
+}
+
+function register_bib(bibstr){
+    $.post("http://localhost:8000/cgi-bin/main.cgi",{
+        "Action" : "RegisterBibStr",
+        "BibStr" : bibstr,
+    });
+    alert("register bib info, and update HTML. please reload.");
+}
+
+function _send_to_tag_cgi(action,name,key){
     $.post("http://localhost:8000/cgi-bin/tag.cgi",
             {
                 "TagAction" : action,
@@ -75,27 +90,22 @@ function _send_to_cgi(action,name,key){
 }
 
 function create_tag(name){
-    _send_to_cgi("CreateTag",name);
+    _send_to_tag_cgi("CreateTag",name);
     alert("Tag created. Please reload");
 }
 
 function delete_tag(name){
-    _send_to_cgi("DeleteTag",name);
+    _send_to_tag_cgi("DeleteTag",name);
     alert("Tag deleted. Please reload");
 }
 
 function tagging(name,key){
-    _send_to_cgi("Tagging",name,key);
+    _send_to_tag_cgi("Tagging",name,key);
     alert("Tagging. Please reload");
 }
 
 function untagging(name,key){
-    _send_to_cgi("unTagging",name,key);
+    _send_to_tag_cgi("unTagging",name,key);
     alert("unTagging. Please reload");
 }
 
-function update_html(){
-    $.post("http://localhost:8000/cgi-bin/update.cgi",{
-        "TagAction" : "update",
-    });
-}

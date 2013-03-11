@@ -48,4 +48,9 @@ $(function(){
         .bind("click",function(event){
             update_html();
         });
+    $("nav#BibRegister>button")
+        .bind("click",function(event){
+            var bibstr = $("nav#BibRegister>textarea").val();
+            register_bib(bibstr);
+        });
 });
