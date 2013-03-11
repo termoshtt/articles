@@ -11,29 +11,34 @@
     <body>
         <h1 id="PageTitle">{{title}}</h1><hr/>
         <nav>
-        <form id="SearchForm">
-            <input id="SearchKeyID" type="text" name="SearchKeyWard" oninput="search()" autofocus placeholder="Search Keywards">
-        </form>
-        <nav class="Tag">
-            <span>Tags</span>
-            <ul class="Selector">
-                {% for tag in tags %}
-                <li>
-                    <div id="{{tag}}" class="Tag">
-                        <span>{{tag}}</span>
-                        <img src="./icons/delete.png" title="delete this tag"/>
-                    </div>
-                </li>
-                {% endfor %}
-                <li>
-                    <span id="ResetTag" class="Tag">reset</span>
-                </li>
-            </ul>
-            <div id="TagAdd">
-                <input type="text" placeholder="Tag Name"/>
-                <input type="button" value="create" title="Create a new tag(reload requires)"/>
-            </div>
-        </nav>
+            <form id="SearchForm">
+                <input id="SearchKeyID" type="text" name="SearchKeyWard" oninput="search()" autofocus placeholder="Search Keywards">
+            </form>
+            <nav class="Tag">
+                <span>Tags</span>
+                <ul class="Selector">
+                    {% for tag in tags %}
+                    <li>
+                        <div id="{{tag}}" class="Tag">
+                            <span>{{tag}}</span>
+                            <img src="./icons/delete.png" title="delete this tag"/>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    <li>
+                        <span id="ResetTag" class="Tag">reset</span>
+                    </li>
+                </ul>
+                <div id="TagAdd">
+                    <input type="text" placeholder="Tag Name"/>
+                    <input type="button" value="create" title="Create a new tag(reload requires)"/>
+                </div>
+            </nav>
+            <button id="UpdateButton">update HTML</button>
+            <nav id="BibRegister">
+                <textarea id="bibstr" placeholder="paste bibtex source here"></textarea>
+                <button>register</button>
+            </nav>
         </nav>
         <hr/>
         {% for entry in entries %}
