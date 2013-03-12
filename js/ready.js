@@ -41,9 +41,7 @@ $(function(){
         .bind("click",function(event){
             $(this).siblings().toggle();
         });
-    $("nav.ArticleTag>ul").toggle();
-    $("nav.ArticleTag>div").toggle();
-
+    
     $("button#UpdateButton")
         .bind("click",function(event){
             update_html();

@@ -2,7 +2,7 @@
 /* globals */
 var g_tags = new Array();
 var g_tag_selected = false;
-
+var prev_search_str = ""
 function check_tag_selected(){
     g_tag_selected = false
     for(tag in g_tags){
@@ -16,6 +16,12 @@ function show_articles(){
     if(!g_tag_selected){
         $("div.Article").show();
     }else{
+        only_show_tagged_articles();
+    }
+}
+
+function only_show_tagged_articles(){
+    if(g_tag_selected){
         $("div.Article").hide();
         for(tag in g_tags){
             if(g_tags[tag]){
@@ -27,16 +33,25 @@ function show_articles(){
 
 function search(){
     // $(".ArticleDiv").show();
-    show_articles();
-    var keys = $("#SearchForm [name=SearchKeyWard]").val().split(/ +/);
+    var search_str = $("#SearchForm [name=SearchKeyWard]").val();
+    var keys = search_str.split(/ +/);
+    if (search_str.slice(0, -1) != prev_search_str) {$("div.Article").show();}
+    only_show_tagged_articles();
+    for (var i = 0; i < keys.length; i++){
+        if (keys[i].length < 3) {
+            prev_search_str = search_str;
+            return;
+        }
+    }
     jQuery.expr[':'].insenseContains = function(a, i, m) {
         return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
     };
     jQuery.each(keys,function(){
         if (this != "") {
-            $("div.Article:not(:insenseContains("+this+"))").hide();
+            $("div.Article:not(:hidden):not(:insenseContains("+this+"))").hide();
         }
     });
+    prev_search_str = search_str;
 }
 
 function tag_select(tag){

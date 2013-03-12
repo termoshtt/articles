@@ -13,3 +13,12 @@ nav span{
     cursor: pointer;
 }
 
+nav.ArticleTag>ul{
+    display: none;
+}
+
+nav.ArticleTag>div{
+    display: none;
+}
+
+

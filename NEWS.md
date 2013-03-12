@@ -10,6 +10,10 @@ News for articles
 
 ## News
 
+### v0.14
+* MOD speed up about incremental search
+* MOD speed up initiation
+
 ### v0.13
 * NEW implement update HTML button
 * NEW implement register bib info from WebApp
