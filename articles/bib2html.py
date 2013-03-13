@@ -44,9 +44,13 @@ def convert(g_cfg):
     art_db = dbio.articles_db(db_filename)
 
     cfg = {}
-    cfg.update({u'title' : u'Articles',})
-    cfg.update({u'tags' : art_db.tags(),})
-    cfg.update({u'entries' : entries,})
+    cfg.update({
+        u'title'   : u'Articles',
+        u'tags'    : art_db.tags(),
+        u'entries' : entries,
+        u'address' : g_cfg["address"],
+        u'port'    : g_cfg["port"],
+        })
     tmpl = Template(open(template_filename,'r').read())
     html = tmpl.render(cfg)
     return html.encode("utf-8")
