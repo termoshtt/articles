@@ -10,6 +10,16 @@ News for articles
 
 ## News
 
+#### v0.15.3
+* BUG refix about register bib
+* NEW create cgi.log
+
+#### v0.15.2
+* MOD speed up of search (pull request #10)
+
+#### v0.15.1
+* BUG fix about register bib
+
 ### v0.15
 * MOD a big fix for the look of WebApp
 
