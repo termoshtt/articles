@@ -10,6 +10,7 @@ header {
     height:6em;
     position:fixed;
     width:20%;
+    display:inline-block;
 }
 
 nav#SideBar {
@@ -48,6 +49,10 @@ div.Tag span{
 
 span.ArticleTag{
     cursor: pointer;
+}
+
+nav h2 {
+    font-size:20px;
 }
 
 nav span{

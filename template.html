@@ -14,10 +14,12 @@
         </header>
         <nav id="SideBar">
             <form id="SearchForm">
+                <img src="./icons/search.png" width="20px"/>
                 <input id="SearchKeyID" type="text" name="SearchKeyWard" oninput="search()" autofocus placeholder="Search Keywards">
+                <img src="./icons/delete.png"/>
             </form>
             <nav class="Tag">
-                <span>Tags</span>
+                <h2>Tags <img src="./icons/tag.png" height="20px"/> </h2>
                 <ul class="Selector">
                     {% for tag in tags %}
                     <li>
@@ -36,10 +38,13 @@
                     <input type="button" value="create" title="Create a new tag(reload requires)"/>
                 </div>
             </nav>
-            <button id="UpdateButton">update HTML</button>
             <nav id="BibRegister">
+                <h2>register BibTeX source</h2>
                 <textarea id="bibstr" placeholder="paste bibtex source here"></textarea>
                 <button>register</button>
+            </nav>
+            <nav>
+                <h2>update HTML <img id="UpdateImg" src="./icons/update.png"/> </h2>
             </nav>
         </nav>
         <div id="Articles">

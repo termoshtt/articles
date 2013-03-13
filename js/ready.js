@@ -42,7 +42,7 @@ $(function(){
             $(this).siblings("nav").toggle();
         });
     
-    $("button#UpdateButton")
+    $("#UpdateImg")
         .bind("click",function(event){
             update_html();
         });
