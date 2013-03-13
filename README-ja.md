@@ -3,11 +3,11 @@
 BibTeXベースの文献管理アプリケーション
 
 ## 特徴
-+ WebApp(HTML+JavaScript)とCGIサーバーで構成される
++ WebApp(HTML+JavaScript)とCGIサーバーで構成
 + 文献の検索、タグ付けによる分類機能
 + エディタ(vim,emacs)へのBibTeXキーの補完機能
 + 静的なHTMLを生成するため、iPadで使用可能
-+ PDFからBibTeXキーの自動取得
++ PDFからBibTeX情報の自動取得
 
 BibTeXに基づいた、
 WebApp(HTML+JavaScript)とCGIサーバーからなる文献管理アプリケーションです。
@@ -42,7 +42,7 @@ jinja2はパッケージ管理アプリケーション(yum,apt等)によって
 見つからない事があるでしょう。
 幸運にもpybtexではeasy-installによってインストールする事が可能です。
 ```shell
-    easy-install pybtex
+easy-install pybtex
 ```
 (通常、管理者権限が必要です)
 もしBibTeXキーの自動取得機能を使用する場合、
@@ -53,14 +53,14 @@ jinja2はパッケージ管理アプリケーション(yum,apt等)によって
 インストール作業を始める前にjinja2,pybtexをインストールしておいて下さい。
 まずソースコードを取得します。
 ```shell
-    git clone http://github.com/termoshtt/ariticles.git
+git clone http://github.com/termoshtt/ariticles.git
 ```
 あるいは.zipをダウンロードし展開してください。
 次にダウンロードしたディレクトリに移動し、
 設定ファイルを$HOMEにコピーします。
 ```shell
-    cd articles
-    cp sample.ini $HOME/.articles.ini
+cd articles
+cp sample.ini $HOME/.articles.ini
 ```
 ここで必要に応じて設定を変更します。
 * [path.bib]        : .bibファイルへのパス
@@ -74,21 +74,21 @@ jinja2はパッケージ管理アプリケーション(yum,apt等)によって
 
 設定を変更したらHTMLを生成し必要な物をコピーするため、次のコマンドを実行します。
 ```shell
-    ./start.py --install
+./start.py --install
 ```
 もし設定ファイルを$HOME/.articles.iniにおきたくない場合は
 --configオプション(あるいは-c)で指定します。
 ```shell
-    ./start.py --install --config=/path/to/your/ini
+./start.py --install --config=/path/to/your/ini
 ```
 または(-iは--installの省略系)
 ```shell
-    ./start.py -i -c /path/to/your/ini
+./start.py -i -c /path/to/your/ini
 ```
 以上で[path.outputdir]にarticles.html他必要なものがコピーされます。
 これでお気に入りのブラウザで
 ```
-    file:///home/yourname/[path.outputdir]/articles.html
+file:///home/yourname/[path.outputdir]/articles.html
 ```
 を開けば論文のリストが閲覧できます。
 
@@ -110,7 +110,7 @@ pythonにはCGIのテスト用のため簡易CGIサーバーを容易に構築�
 
 サーバーを立てるにはやはりstart.pyを使用します。
 ```shell
-    ./start.py
+./start.py
 ```
 これにより.htmlを更新した上でCGIサーバーが立ちます。
 このプロセスは中断しない限りCGIのリクエストを待ちつづけるので、
@@ -126,11 +126,11 @@ Tag Nameを入力し、createボタンを押すことにより文献にタグを
 ### BibTeXキーの自動取得
 PDFからBibTeX情報を取得するには
 ```shell
-    ./start.py --getbib
+./start.py --getbib
 ```
 あるいは
 ```shell
-    ./start.py -b
+./start.py -b
 ```
 を実行します。
 これにより対応するBibTeXキーが存在しないPDFの一覧が表示され、
