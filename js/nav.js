@@ -14,7 +14,7 @@ function check_tag_selected(){
 
 function show_articles(){
     if(!g_tag_selected){
-        $("div.Article").show();
+        $("div.Article:hidden").show();
     }else{
         only_show_tagged_articles();
     }
@@ -22,7 +22,7 @@ function show_articles(){
 
 function only_show_tagged_articles(){
     if(g_tag_selected){
-        $("div.Article").hide();
+        $("div.Article:not(:hidden)").hide();
         for(tag in g_tags){
             if(g_tags[tag]){
                 $("div.Article:has(span:contains("+tag+"))").show();
@@ -35,7 +35,7 @@ function search(){
     // $(".ArticleDiv").show();
     var search_str = $("#SearchForm [name=SearchKeyWard]").val();
     var keys = search_str.split(/ +/);
-    if (search_str.slice(0, -1) != prev_search_str) {$("div.Article").show();}
+    if (search_str.slice(0, -1) != prev_search_str) {$("div.Article:hidden").show();}
     only_show_tagged_articles();
     for (var i = 0; i < keys.length; i++){
         if (keys[i].length < 3) {
