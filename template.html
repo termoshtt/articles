@@ -9,8 +9,10 @@
         <title>{{title}}</title>
     </head>
     <body>
-        <h1 id="PageTitle">{{title}}</h1><hr/>
-        <nav>
+        <header>
+            <h1 id="PageTitle">{{title}}</h1>
+        </header>
+        <nav id="SideBar">
             <form id="SearchForm">
                 <input id="SearchKeyID" type="text" name="SearchKeyWard" oninput="search()" autofocus placeholder="Search Keywards">
             </form>
@@ -40,9 +42,10 @@
                 <button>register</button>
             </nav>
         </nav>
-        <hr/>
+        <div id="Articles">
         {% for entry in entries %}
         <div id='{{entry["key"]}}' class="Article">
+            <img src="./icons/tag.png" height="20px"/>
             <a class="ArticleLink" href='./pdf/{{entry["key"]}}.pdf'>{{entry["title"]}}</a>
             <ul>
                 <li>Author : {{entry["author"]}}</li>
@@ -68,5 +71,6 @@
             </nav>
         </div>
         {% endfor %}
+        </div>
     </body>
 </html>

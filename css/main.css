@@ -1,5 +1,46 @@
 
-#PageTitle{}
+body {
+    margin::0;
+    padding:0;
+}
+
+header {
+    top:0;
+    left:0;
+    height:6em;
+    position:fixed;
+    width:20%;
+}
+
+nav#SideBar {
+    /* background-color: gray;  */
+    border-radius:10px;
+    top:6em;
+    left:0;
+    position:fixed;
+    width:20%;
+    height:90%;
+    margin:0;
+    padding:0;
+    overflow:auto;
+}
+
+div#Articles{
+    height:90%;
+    top:10%;
+    left:20%;
+    /* margin:20%; */
+    padding:20px;
+    position:relative;
+    width:75%;
+}
+
+div.Article{
+    border:3px gray solid;
+    border-radius:20px;
+    padding: 5px 10px 0;
+    margin: 10px;
+}
 
 div.Tag span{
     cursor: pointer;
@@ -14,11 +55,11 @@ nav span{
 }
 
 nav.ArticleTag>ul{
-    display: none;
+    /* display: none; */
 }
 
 nav.ArticleTag>div{
-    display: none;
+    /* display: none; */
 }
 
 
