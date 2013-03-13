@@ -1,6 +1,6 @@
 
 body {
-    margin::0;
+    margin:0;
     padding:0;
 }
 
@@ -14,8 +14,6 @@ header {
 }
 
 nav#SideBar {
-    /* background-color: gray;  */
-    border-radius:10px;
     top:6em;
     left:0;
     position:fixed;
@@ -29,12 +27,11 @@ nav#SideBar {
 div#Articles{
     height:90%;
     top:10%;
-    left:20%;
-    /* margin:20%; */
+    left:25%;
     padding:20px;
     padding-top:70px;
     position:relative;
-    width:75%;
+    width:70%;
 }
 
 div.Article{

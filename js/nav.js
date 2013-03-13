@@ -81,14 +81,14 @@ function _disable_tag(tag){
 }
 
 function update_html(){
-    $.post("http://localhost:8000/cgi-bin/main.cgi",{
+    $.post(addr_header+"/cgi-bin/main.cgi",{
         "Action" : "UpdateHTML"
     });
     alert("update HTML. please reload.");
 }
 
 function register_bib(bibstr){
-    $.post("http://localhost:8000/cgi-bin/main.cgi",{
+    $.post(addr_header+"/cgi-bin/main.cgi",{
         "Action" : "RegisterBibStr",
         "BibStr" : bibstr
     });
@@ -96,7 +96,7 @@ function register_bib(bibstr){
 }
 
 function _send_to_tag_cgi(action,name,key){
-    $.post("http://localhost:8000/cgi-bin/tag.cgi",
+    $.post(addr_header+"/cgi-bin/tag.cgi",
             {
                 "TagAction" : action,
                 "TagName" : name,
