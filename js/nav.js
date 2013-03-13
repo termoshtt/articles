@@ -2,9 +2,9 @@
 /* globals */
 var g_tags = new Array();
 var g_tag_selected = false;
-var prev_search_str = ""
+var prev_search_str = "";
 function check_tag_selected(){
-    g_tag_selected = false
+    g_tag_selected = false;
     for(tag in g_tags){
         if(g_tags[tag]){
             g_tag_selected = true;
@@ -14,7 +14,7 @@ function check_tag_selected(){
 
 function show_articles(){
     if(!g_tag_selected){
-        $("div.Article").show();
+        $("div.Article:hidden").show();
     }else{
         only_show_tagged_articles();
     }
@@ -22,7 +22,7 @@ function show_articles(){
 
 function only_show_tagged_articles(){
     if(g_tag_selected){
-        $("div.Article").hide();
+        $("div.Article:not(:hidden)").hide();
         for(tag in g_tags){
             if(g_tags[tag]){
                 $("div.Article:has(span:contains("+tag+"))").show();
@@ -35,7 +35,7 @@ function search(){
     // $(".ArticleDiv").show();
     var search_str = $("#SearchForm [name=SearchKeyWard]").val();
     var keys = search_str.split(/ +/);
-    if (search_str.slice(0, -1) != prev_search_str) {$("div.Article").show();}
+    if (search_str.slice(0, -1) != prev_search_str) {$("div.Article:hidden").show();}
     only_show_tagged_articles();
     for (var i = 0; i < keys.length; i++){
         if (keys[i].length < 3) {
@@ -82,7 +82,7 @@ function _disable_tag(tag){
 
 function update_html(){
     $.post("http://localhost:8000/cgi-bin/main.cgi",{
-        "Action" : "UpdateHTML",
+        "Action" : "UpdateHTML"
     });
     alert("update HTML. please reload.");
 }
@@ -90,7 +90,7 @@ function update_html(){
 function register_bib(bibstr){
     $.post("http://localhost:8000/cgi-bin/main.cgi",{
         "Action" : "RegisterBibStr",
-        "BibStr" : bibstr,
+        "BibStr" : bibstr
     });
     alert("register bib info, and update HTML. please reload.");
 }
@@ -100,7 +100,7 @@ function _send_to_tag_cgi(action,name,key){
             {
                 "TagAction" : action,
                 "TagName" : name,
-                "BibTeXKey" : key,
+                "BibTeXKey" : key
             });
 }
 
