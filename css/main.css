@@ -32,6 +32,7 @@ div#Articles{
     left:20%;
     /* margin:20%; */
     padding:20px;
+    padding-top:70px;
     position:relative;
     width:75%;
 }
@@ -59,7 +60,15 @@ nav span{
     cursor: pointer;
 }
 
+img{
+    cursor: pointer;
+}
+
 nav.ArticleTag{
     display: none;
+}
+
+#SearchForm>nav{
+    display:none;
 }
 
