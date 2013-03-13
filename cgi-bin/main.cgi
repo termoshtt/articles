@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-import cgitb
-cgitb.enable()
+import cgi
 import sys
 import os
 import pickle
@@ -33,15 +32,31 @@ action = {
     }
 
 def main():
+    with open(".config.pickle","rb") as g_cfg_f:
+        g_cfg = pickle.load(g_cfg_f)
+    logfile = g_cfg["logfile"]
     req = handler.Request()
     if "Action" not in req.form:
-        raise Warning("Action form is not contained.")
+        with open(logfile,"a+") as logf:
+            logf.write("(WW) Action is not found in cgi.form")
         return 1
     action_type = req.form["Action"].value
     if action_type not in action:
-        raise Warning("TagAction is not implimented yet." )
+        with open(logfile,"a+") as logf:
+            logf.write("(WW) Action is not implimented")
         return 1
-    action[action_type](req.form)
+    try:
+        action[action_type](req.form)
+    except Warning,e:
+        with open(logfile,"a+") as logf:
+            logf.write("(WW) catch warning while Action:")
+            logf.write(str(e))
+        return 1
+    except Exception,e:
+        with open(logfile,"a+") as logf:
+            logf.write("(EE) error occured in Action:")
+            logf.write(str(e))
+        return 1
 
 if __name__ == "__main__":
     main()
