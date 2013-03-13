@@ -2,9 +2,9 @@
 /* globals */
 var g_tags = new Array();
 var g_tag_selected = false;
-var prev_search_str = ""
+var prev_search_str = "";
 function check_tag_selected(){
-    g_tag_selected = false
+    g_tag_selected = false;
     for(tag in g_tags){
         if(g_tags[tag]){
             g_tag_selected = true;
@@ -82,7 +82,7 @@ function _disable_tag(tag){
 
 function update_html(){
     $.post("http://localhost:8000/cgi-bin/main.cgi",{
-        "Action" : "UpdateHTML",
+        "Action" : "UpdateHTML"
     });
     alert("update HTML. please reload.");
 }
@@ -90,7 +90,7 @@ function update_html(){
 function register_bib(bibstr){
     $.post("http://localhost:8000/cgi-bin/main.cgi",{
         "Action" : "RegisterBibStr",
-        "BibStr" : bibstr,
+        "BibStr" : bibstr
     });
     alert("register bib info, and update HTML. please reload.");
 }
@@ -100,7 +100,7 @@ function _send_to_tag_cgi(action,name,key){
             {
                 "TagAction" : action,
                 "TagName" : name,
-                "BibTeXKey" : key,
+                "BibTeXKey" : key
             });
 }
 
