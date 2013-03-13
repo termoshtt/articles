@@ -5,6 +5,12 @@ If you are Japanese, see README-ja.md.
 An article manager based on BibTeX
 
 ## Features
++ consists of WebApp(HTML+JavaScript) and CGI server
++ Searching and Tagging articles
++ serve sources for complement of BibTeX key in vim(unite.vim)/emacs(helm)
++ works on iPad, since static HTML is generated
++ get BibTeX informations from PDF automatically
+
 This application is an article manager composed of WebApp(HTML+JavaScript) and CGI server.
 This generate a HTML containing the information of articles from a BibTeX file,
 and an articles searching function is implemented by JavaScript.
@@ -17,16 +23,14 @@ Using this project,
 You can view the information of articles saved in BibTeX file by your favor web browser.
 Since a static HTML is generated,
 it can be used on iPad or other tablet PCs same as on the PC.
+In addition, 
+a source for complement of BibTeX key in vim(unite.vim)/emacs(helm) is served.
+If you do not use BibTeX now,
+you can get BibTeX informations from PDFs automatically.
 
 In this version this application is developed on Fedora17 and Mac OS X 10.8.
 
 ## Install
-
-### necessaries (BibTeX key)
-In order to use link embedded in HTML articles list,
-the file name of PDF files must be in the form '[bibtexkey].pdf'.
-([bibtexkey] represents the BibTeX key of the article.)
-Since it is too hard to provide file name converter, please rename by your own.
 
 ### dependencies
 The most part of this project is written in python2,
@@ -66,6 +70,8 @@ You should modify the configure file now.
 * [name.template]   : the name of template file used to generate HTML from .bib file
 * [name.html]       : the name of generated HTML
 * [name.database]   : the name of database that contains the tagging information
+* [name.logfile]    : the name of log file in which messages from CGI will output
+* [server.address]  : the address of CGI server
 * [server.port]     : the port of CGI server
 
 After configuration, generate HTML and copy js/, css/, icons/ to your install directory.
@@ -126,6 +132,18 @@ placed under the information of articles in WebApp.
 Then you can put a tag on the article
 by create button with the tag name entered into the text area "Tag Name".
 After put tags, you can narrow the articles down to tagged articles.
+
+### get BibTeX information
+In order to obtain BibTeX informations from PDF,
+please execute the following command:
+```shell
+./start.py --getbib
+```
+or
+```shell
+./start.py -b
+```
+Then the list of PDF whose corresponding BibTeX key does not exist is displayed.
 
 ### use in iPad/GoodReader
 Here, the usage of this application in iPad will be explained shortly.
