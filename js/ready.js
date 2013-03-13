@@ -37,9 +37,9 @@ $(function(){
         .bind("click",function(event){
             $(this).siblings().toggle();
         });
-    $("nav.ArticleTag>span")
+    $("img.TagImg")
         .bind("click",function(event){
-            $(this).siblings().toggle();
+            $(this).siblings("nav").toggle();
         });
     
     $("button#UpdateButton")

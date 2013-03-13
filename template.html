@@ -45,7 +45,7 @@
         <div id="Articles">
         {% for entry in entries %}
         <div id='{{entry["key"]}}' class="Article">
-            <img src="./icons/tag.png" height="20px"/>
+            <img class="TagImg" src="./icons/tag.png" height="20px"/>
             <a class="ArticleLink" href='./pdf/{{entry["key"]}}.pdf'>{{entry["title"]}}</a>
             <ul>
                 <li>Author : {{entry["author"]}}</li>

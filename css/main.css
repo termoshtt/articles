@@ -38,7 +38,7 @@ div#Articles{
 div.Article{
     border:3px gray solid;
     border-radius:20px;
-    padding: 5px 10px 0;
+    padding: 5px 10px 5px;
     margin: 10px;
 }
 
@@ -54,12 +54,7 @@ nav span{
     cursor: pointer;
 }
 
-nav.ArticleTag>ul{
-    /* display: none; */
+nav.ArticleTag{
+    display: none;
 }
-
-nav.ArticleTag>div{
-    /* display: none; */
-}
-
 
