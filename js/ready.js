@@ -37,12 +37,12 @@ $(function(){
         .bind("click",function(event){
             $(this).siblings().toggle();
         });
-    $("nav.ArticleTag>span")
+    $("img.TagImg")
         .bind("click",function(event){
-            $(this).siblings().toggle();
+            $(this).siblings("nav").toggle();
         });
     
-    $("button#UpdateButton")
+    $("nav#UpdateHTML>h2")
         .bind("click",function(event){
             update_html();
         });
@@ -50,5 +50,23 @@ $(function(){
         .bind("click",function(event){
             var bibstr = $("nav#BibRegister>textarea").val();
             register_bib(bibstr);
+        });
+    
+    $("#SearchForm>img.Delete")
+        .bind("click",function(event){
+            $("#SearchForm [name=SearchKeyWard]").val('');
+        });
+    $("#SearchForm>img.Search")
+        .bind("click",function(event){
+            $(this).siblings("nav").toggle();
+        });
+    $("nav.Tag>h2")
+        .bind("click",function(event){
+            $(this).siblings("ul").toggle();
+            $(this).siblings("div").toggle();
+        });
+    $("nav#BibRegister>h2")
+        .bind("click",function(event){
+            $(this).siblings("div").toggle();
         });
 });
