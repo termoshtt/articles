@@ -46,9 +46,9 @@ $(function(){
         .bind("click",function(event){
             update_html();
         });
-    $("nav#BibRegister>button")
+    $("nav#BibRegister>div>button")
         .bind("click",function(event){
-            var bibstr = $("nav#BibRegister>textarea").val();
+            var bibstr = $("nav#BibRegister>div>textarea").val();
             register_bib(bibstr);
         });
     
