@@ -10,6 +10,9 @@ News for articles
 
 ## News
 
+### v0.15
+* MOD a big fix for the look of WebApp
+
 ### v0.14
 * MOD speed up about incremental search
 * MOD speed up initiation

@@ -9,13 +9,21 @@
         <title>{{title}}</title>
     </head>
     <body>
-        <h1 id="PageTitle">{{title}}</h1><hr/>
-        <nav>
-            <form id="SearchForm">
+        <header>
+            <h1 id="PageTitle">{{title}}</h1>
+        </header>
+        <nav id="SideBar">
+            <div id="SearchForm">
+                <img class="Search" src="./icons/search.png" width="20px"/>
                 <input id="SearchKeyID" type="text" name="SearchKeyWard" oninput="search()" autofocus placeholder="Search Keywards">
-            </form>
+                <img class="Delete" src="./icons/delete.png"/>
+                <nav id="DetailSearch">
+                    <h2>Detail Search</h2>
+                    no filter is available
+                </nav>
+            </div>
             <nav class="Tag">
-                <span>Tags</span>
+                <h2>Tags <img src="./icons/tag.png" height="20px"/> </h2>
                 <ul class="Selector">
                     {% for tag in tags %}
                     <li>
@@ -34,15 +42,21 @@
                     <input type="button" value="create" title="Create a new tag(reload requires)"/>
                 </div>
             </nav>
-            <button id="UpdateButton">update HTML</button>
             <nav id="BibRegister">
-                <textarea id="bibstr" placeholder="paste bibtex source here"></textarea>
-                <button>register</button>
+                <h2>register BibTeX source <img src="./icons/register.png" width="20px"/></h2>
+                <div>
+                    <textarea id="bibstr" placeholder="paste bibtex source here"></textarea>
+                    <button>register</button>
+                </div>
+            </nav>
+            <nav id="UpdateHTML">
+                <h2>update HTML <img id="UpdateImg" src="./icons/update.png" width="20px"/> </h2>
             </nav>
         </nav>
-        <hr/>
+        <div id="Articles">
         {% for entry in entries %}
         <div id='{{entry["key"]}}' class="Article">
+            <img class="TagImg" src="./icons/tag.png" height="20px"/>
             <a class="ArticleLink" href='./pdf/{{entry["key"]}}.pdf'>{{entry["title"]}}</a>
             <ul>
                 <li>Author : {{entry["author"]}}</li>
@@ -68,5 +82,6 @@
             </nav>
         </div>
         {% endfor %}
+        </div>
     </body>
 </html>
