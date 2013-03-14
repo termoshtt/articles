@@ -32,6 +32,14 @@ In this version this application is developed on Fedora17 and Mac OS X 10.8.
 
 ## Install
 
+### necessaries (BibTeX key)
+In order to use link embedded in HTML articles list,
+the file name of PDF files must be in the form '[bibtexkey].pdf'.
+([bibtexkey] represents the BibTeX key of the article.)
+When you get BibTeX informations from PDF files,
+these PDF files are renamed to the required form automatically.
+So you need not to rename by yourself.
+
 ### dependencies
 The most part of this project is written in python2,
 and depends on the following libraries.
