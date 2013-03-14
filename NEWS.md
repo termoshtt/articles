@@ -10,6 +10,10 @@ News for articles
 
 ## News
 
+### v1.0
+First major release of this project.
+* MOD refine README
+
 #### v0.15.3
 * BUG refix about register bib
 * NEW create cgi.log
