@@ -5,18 +5,29 @@ If you are Japanese, see README-ja.md.
 An article manager based on BibTeX
 
 ## Features
++ consists of WebApp(HTML+JavaScript) and CGI server
++ Searching and Tagging articles
++ sources for complement of BibTeX key in vim(unite.vim) or emacs(helm) are served
++ works on iPad (GoodReader)
++ get BibTeX informations from PDF automatically
+
 This application is an article manager composed of WebApp(HTML+JavaScript) and CGI server.
-This generate a HTML containing the information of articles from a BibTeX file,
-and an articles searching function is implemented by JavaScript.
-The WebApp can be used alone,
-but a tagging feature is available if you use CGI server simultaneously.
-After you add tags to your articles, 
-since these tagging information are also saved into HTML file,
-you can use tag-search feature in WebApp alone.
+This generate a static HTML file from BibTeX file,
+and some support features (searching and tagging articles) are implemented by JavaScript.
+This WebApp can also be used alone, however,
+the tagging feature (add new tags and delete tags) is unavailable without CGI server.
+Once you add tags to your articles on WebApp, 
+these tagging information are saved into HTML file;
+you can use the tag-search feature in WebApp alone.
 Using this project,
-You can view the information of articles saved in BibTeX file by your favor web browser.
-Since a static HTML is generated,
-it can be used on iPad or other tablet PCs same as on the PC.
+You can browse your articles managed by BibTeX in your favor web browser.
+If you are using GoodReader, which is one of the most cool iPad App,
+you can send the static HTML into GoodReader and use the WebApp in GoodReader.
+In addition, when you are writing an article or a paper in your favorite editor,
+which must be vim or emacs,
+you can complement a BibTeX key from this project.
+If you are not using BibTeX now,
+you can get BibTeX informations from PDFs automatically.
 
 In this version this application is developed on Fedora17 and Mac OS X 10.8.
 
@@ -26,7 +37,9 @@ In this version this application is developed on Fedora17 and Mac OS X 10.8.
 In order to use link embedded in HTML articles list,
 the file name of PDF files must be in the form '[bibtexkey].pdf'.
 ([bibtexkey] represents the BibTeX key of the article.)
-Since it is too hard to provide file name converter, please rename by your own.
+When you get BibTeX informations from PDF files,
+these PDF files are renamed to the required form automatically.
+So you need not to rename by yourself.
 
 ### dependencies
 The most part of this project is written in python2,
@@ -39,7 +52,7 @@ jinja2 can be found in the package manager (yum,apt,..).
 However, pybtex might not be found, so you have to install it manually.
 Fortunately, pybtex can be installed by easy-install
 ```shell
-    easy-install pybtex
+easy-install pybtex
 ```
 (usually root authorization is needed.)
 If you use --getbib (-b) option,
@@ -52,13 +65,13 @@ Before install this program, please install pybtex and jinja2.
 
 At first, please get the source code of this project:
 ```shell
-    git clone http://github.com/termoshtt/ariticles.git
+git clone http://github.com/termoshtt/ariticles.git
 ```
 or please download .zip and extract.
 Next go into the directory and copy the configure file to your $HOME:
 ```shell
-    cd articles
-    cp sample.ini ~/.articles.ini
+cd articles
+cp sample.ini ~/.articles.ini
 ```
 You should modify the configure file now.
 * [path.bib]        : the path for .bib file
@@ -66,15 +79,17 @@ You should modify the configure file now.
 * [name.template]   : the name of template file used to generate HTML from .bib file
 * [name.html]       : the name of generated HTML
 * [name.database]   : the name of database that contains the tagging information
+* [name.logfile]    : the name of log file in which messages from CGI will output
+* [server.address]  : the address of CGI server
 * [server.port]     : the port of CGI server
 
 After configuration, generate HTML and copy js/, css/, icons/ to your install directory.
 ```shell
-    ./start.py --install
+./start.py --install
 ```
 if you do not want to place ~/.articles.ini, you can use other configure file:
 ```shell
-    ./start.py -i -c path/to/configure.ini
+./start.py -i -c path/to/configure.ini
 ```
 (--install can be abbreviate by -i)
 
@@ -84,18 +99,18 @@ i.e. [path.outputdir].
 Let's open your articles.html with your favorite browser.
 If you like Firefox,
 ```shell
-    firefox path/to/articles.html
+firefox path/to/articles.html
 ```
 or enter 
 ```
-    file:///home/yourname/path/to/articles.html
+file:///home/yourname/path/to/articles.html
 ```
 into your navigation toolbar.
 
 When the BibTeX file updated,
 you can update HTML file by
 ```shell
-    ./start.py -n
+./start.py -n
 ```
 
 ## Usage
@@ -115,7 +130,7 @@ and use this library in this project.
 
 The CGI server stands also by start.py:
 ```shell
-    ./start.py
+./start.py
 ```
 Then the .html file is updated and CGI server stands.
 This process wait CGI request until you kill this process,
@@ -126,6 +141,18 @@ placed under the information of articles in WebApp.
 Then you can put a tag on the article
 by create button with the tag name entered into the text area "Tag Name".
 After put tags, you can narrow the articles down to tagged articles.
+
+### get BibTeX information
+In order to obtain BibTeX informations from PDF,
+please execute the following command:
+```shell
+./start.py --getbib
+```
+or
+```shell
+./start.py -b
+```
+Then the list of PDF whose corresponding BibTeX key does not exist is displayed.
 
 ### use in iPad/GoodReader
 Here, the usage of this application in iPad will be explained shortly.
@@ -145,8 +172,8 @@ and you can use the links to articles.
 #### use with CGI server
 Since there is no way to stand CGI server on iPad,
 it is necessary to stand a server out of iPad.
-In this version, the address to cgi is hard coded,
-so you have to rewrite this part or use iSSH or other ssh client to port forwarding.
+The address and port to CGI server are embedded in HTML file,
+and they can be modified by the configure file.
 
 ## License
 BSD 3-Clause License
