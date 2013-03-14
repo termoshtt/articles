@@ -18,6 +18,7 @@ def read(filename):
     config["template_file"] = parser.get("name","template")
     config["html_file"]     = parser.get("name","html")
     config["port"]          = int(parser.get("server","port"))
+    config["address"]       = parser.get("server","address")
     config["db_file"]       = os.path.join(config["output"],parser.get("name","database"))
     config["logfile"]       = parser.get("name","logfile")
     return config
