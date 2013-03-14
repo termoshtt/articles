@@ -52,7 +52,7 @@ jinja2 can be found in the package manager (yum,apt,..).
 However, pybtex might not be found, so you have to install it manually.
 Fortunately, pybtex can be installed by easy-install
 ```shell
-    easy-install pybtex
+easy-install pybtex
 ```
 (usually root authorization is needed.)
 If you use --getbib (-b) option,
@@ -65,13 +65,13 @@ Before install this program, please install pybtex and jinja2.
 
 At first, please get the source code of this project:
 ```shell
-    git clone http://github.com/termoshtt/ariticles.git
+git clone http://github.com/termoshtt/ariticles.git
 ```
 or please download .zip and extract.
 Next go into the directory and copy the configure file to your $HOME:
 ```shell
-    cd articles
-    cp sample.ini ~/.articles.ini
+cd articles
+cp sample.ini ~/.articles.ini
 ```
 You should modify the configure file now.
 * [path.bib]        : the path for .bib file
@@ -85,11 +85,11 @@ You should modify the configure file now.
 
 After configuration, generate HTML and copy js/, css/, icons/ to your install directory.
 ```shell
-    ./start.py --install
+./start.py --install
 ```
 if you do not want to place ~/.articles.ini, you can use other configure file:
 ```shell
-    ./start.py -i -c path/to/configure.ini
+./start.py -i -c path/to/configure.ini
 ```
 (--install can be abbreviate by -i)
 
@@ -99,18 +99,18 @@ i.e. [path.outputdir].
 Let's open your articles.html with your favorite browser.
 If you like Firefox,
 ```shell
-    firefox path/to/articles.html
+firefox path/to/articles.html
 ```
 or enter 
 ```
-    file:///home/yourname/path/to/articles.html
+file:///home/yourname/path/to/articles.html
 ```
 into your navigation toolbar.
 
 When the BibTeX file updated,
 you can update HTML file by
 ```shell
-    ./start.py -n
+./start.py -n
 ```
 
 ## Usage
@@ -130,7 +130,7 @@ and use this library in this project.
 
 The CGI server stands also by start.py:
 ```shell
-    ./start.py
+./start.py
 ```
 Then the .html file is updated and CGI server stands.
 This process wait CGI request until you kill this process,
