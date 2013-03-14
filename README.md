@@ -7,25 +7,26 @@ An article manager based on BibTeX
 ## Features
 + consists of WebApp(HTML+JavaScript) and CGI server
 + Searching and Tagging articles
-+ serve sources for complement of BibTeX key in vim(unite.vim)/emacs(helm)
-+ works on iPad, since static HTML is generated
++ sources for complement of BibTeX key in vim(unite.vim) or emacs(helm) are served
++ works on iPad (GoodReader)
 + get BibTeX informations from PDF automatically
 
 This application is an article manager composed of WebApp(HTML+JavaScript) and CGI server.
-This generate a HTML containing the information of articles from a BibTeX file,
-and an articles searching function is implemented by JavaScript.
-The WebApp can be used alone,
-but a tagging feature is available if you use CGI server simultaneously.
-After you add tags to your articles, 
-since these tagging information are also saved into HTML file,
-you can use tag-search feature in WebApp alone.
+This generate a static HTML file from BibTeX file,
+and some support features (searching and tagging articles) are implemented by JavaScript.
+This WebApp can also be used alone, however,
+the tagging feature (add new tags and delete tags) is unavailable without CGI server.
+Once you add tags to your articles on WebApp, 
+these tagging information are saved into HTML file;
+you can use the tag-search feature in WebApp alone.
 Using this project,
-You can view the information of articles saved in BibTeX file by your favor web browser.
-Since a static HTML is generated,
-it can be used on iPad or other tablet PCs same as on the PC.
-In addition, 
-a source for complement of BibTeX key in vim(unite.vim)/emacs(helm) is served.
-If you do not use BibTeX now,
+You can browse your articles managed by BibTeX in your favor web browser.
+If you are using GoodReader, which is one of the most cool iPad App,
+you can send the static HTML into GoodReader and use the WebApp in GoodReader.
+In addition, when you are writing an article or a paper in your favorite editor,
+which must be vim or emacs,
+you can complement a BibTeX key from this project.
+If you are not using BibTeX now,
 you can get BibTeX informations from PDFs automatically.
 
 In this version this application is developed on Fedora17 and Mac OS X 10.8.
@@ -171,8 +172,8 @@ and you can use the links to articles.
 #### use with CGI server
 Since there is no way to stand CGI server on iPad,
 it is necessary to stand a server out of iPad.
-In this version, the address to cgi is hard coded,
-so you have to rewrite this part or use iSSH or other ssh client to port forwarding.
+The address and port to CGI server are embedded in HTML file,
+and they can be modified by the configure file.
 
 ## License
 BSD 3-Clause License
