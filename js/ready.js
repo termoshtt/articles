@@ -19,12 +19,15 @@ $(function(){
             });
 
     /* Article tag manipulation */
-    $("div.AddArticleTag>input[type='button']")
+    $("nav.AppendArticleTag>button")
         .bind("click",function(event){
-                var name = $(this).prev("input[type='text']").val();
-                var key = this.parentElement.parentElement.parentElement.id;
-                tagging(name,key);
-            });
+            var key = this.parentElement.parentElement.parentElement.id;
+            var selected_tags = $("nav.AppendArticleTag>select").val();
+            for(var i=0;i<selected_tags.length;++i){
+                var tag = selected_tags[i];
+                tagging(tag,key);
+            }
+        });
     $("div.ArticleTag > img")
         .bind("click",function(event){
                 var name = this.parentElement.id;

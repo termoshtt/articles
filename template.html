@@ -67,7 +67,7 @@
                 <li>Published Year: {{entry["year"]}}</li>
             </ul>
             <nav class="ArticleTag">
-                <span>Tags of article</span>
+                <h4>Tags of article</h4>
                 <ul class="ArticleTagList">
                     {% for tag in entry["tags"] %}
                     <li>
@@ -78,10 +78,17 @@
                     </li>
                     {% endfor %}
                 </ul>
-                <div class="AddArticleTag">
-                    <input type="text" placeholder="Tag Name"/>
-                    <input type="button" value="create" title="Create a new article tag(reload requires)"/>
-                </div>
+                <nav class="AppendArticleTag">
+                    <h4>Append Tags</h4>
+                    <select size="5" multiple>
+                        {% for tag in tags %}
+                            {% if tag not in entry["tags"] %}
+                            <option value="{{tag}}">{{tag}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <button>append</button>
+                </nav>
             </nav>
         </div>
         {% endfor %}
