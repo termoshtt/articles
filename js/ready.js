@@ -22,7 +22,8 @@ $(function(){
     $("nav.AppendArticleTag>button")
         .bind("click",function(event){
             var key = this.parentElement.parentElement.parentElement.id;
-            var selected_tags = $("nav.AppendArticleTag>select").val();
+            var selected_tags = $(this).prev("select").val();
+            if(!selected_tags){ return; }
             for(var i=0;i<selected_tags.length;++i){
                 var tag = selected_tags[i];
                 tagging(tag,key);
