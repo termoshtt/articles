@@ -34,7 +34,8 @@ In summary, you can do without server:
 + article search (title,journal,author,date)
 + auto-generate .bib file (from command line, see below)
 + BibTeX-key complement in your editor(vim,emacs)
-and you can do with server:
+
+And you can do with server:
 + tagging/untagging article
 + register BibTeX information through WebApp
 + update HTML from WebApp
