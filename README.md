@@ -21,7 +21,7 @@ these tagging information are saved into HTML file;
 you can use the tag-search feature in WebApp alone.
 Using this project,
 You can browse your articles managed by BibTeX in your favor web browser.
-If you are using GoodReader, which is one of the most cool iPad App,
+If you are using GoodReader, which is one of the most cool iPad application,
 you can send the static HTML into GoodReader and use the WebApp in GoodReader.
 In addition, when you are writing an article or a paper in your favorite editor,
 which must be vim or emacs,
@@ -117,7 +117,7 @@ file:///home/yourname/path/to/articles.html
 ```
 into your navigation toolbar.
 
-When the BibTeX file updated,
+When the BibTeX file is updated,
 you can update HTML file by
 ```shell
 ./start.py -n
