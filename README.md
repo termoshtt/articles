@@ -21,7 +21,7 @@ these tagging information are saved into HTML file;
 you can use the tag-search feature in WebApp alone.
 Using this project,
 You can browse your articles managed by BibTeX in your favor web browser.
-If you are using GoodReader, which is one of the most cool iPad App,
+If you are using GoodReader, which is one of the most cool iPad application,
 you can send the static HTML into GoodReader and use the WebApp in GoodReader.
 In addition, when you are writing an article or a paper in your favorite editor,
 which must be vim or emacs,
@@ -29,7 +29,17 @@ you can complement a BibTeX key from this project.
 If you are not using BibTeX now,
 you can get BibTeX informations from PDFs automatically.
 
-In this version this application is developed on Fedora17 and Mac OS X 10.8.
+In summary, you can do without server:
++ generate static HTML file
++ article search (title,journal,author,date)
++ auto-generate .bib file (from command line, see below)
++ BibTeX-key complement in your editor(vim,emacs)
+and you can do with server:
++ tagging/untagging article
++ register BibTeX information through WebApp
++ update HTML from WebApp
+
+In this version this application is developed on Fedora18 and Mac OS X 10.8.
 
 ## Install
 
@@ -65,7 +75,7 @@ Before install this program, please install pybtex and jinja2.
 
 At first, please get the source code of this project:
 ```shell
-git clone http://github.com/termoshtt/ariticles.git
+git clone git://github.com/termoshtt/ariticles.git
 ```
 or please download .zip and extract.
 Next go into the directory and copy the configure file to your $HOME:
@@ -107,7 +117,7 @@ file:///home/yourname/path/to/articles.html
 ```
 into your navigation toolbar.
 
-When the BibTeX file updated,
+When the BibTeX file is updated,
 you can update HTML file by
 ```shell
 ./start.py -n

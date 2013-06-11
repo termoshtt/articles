@@ -25,7 +25,18 @@ iPad等のタブレットPCでも用いる事ができます。
 BibTeXキーを現在管理していない場合でも、
 PDFから自動的にdoiを取得し、そこからBibTeXの情報を取得できます。
 
-現在のバージョンはFedora17,Mac OS X(10.8)で開発されています。
+つまり、サーバーの無い場合に使用できるのは、
++ 静的なHTMLファイルの生成
++ 文献の検索(タイトル、著者、雑誌名、日付)
++ .bibファイルの自動生成
++ エディタでのBibTeX-keyの補完機能
+さらにサーバーがあれば、
++ 文献へのタグ付け
++ WebApp経由でのHTMLの更新
++ WebApp経由でのBibTeX情報の登録
+が可能となります。
+
+現在のバージョンはFedora18, Mac OS X(10.8)で開発されています。
 
 ## インストール
 
@@ -63,7 +74,7 @@ easy_install pybtex
 インストール作業を始める前にjinja2,pybtexをインストールしておいて下さい。
 まずソースコードを取得します。
 ```shell
-git clone http://github.com/termoshtt/ariticles.git
+git clone git://github.com/termoshtt/ariticles.git
 ```
 あるいは.zipをダウンロードし展開してください。
 次にダウンロードしたディレクトリに移動し、
@@ -101,6 +112,12 @@ cp sample.ini $HOME/.articles.ini
 file:///home/yourname/[path.outputdir]/articles.html
 ```
 を開けば論文のリストが閲覧できます。
+
+.bibファイルをアップデートした後、
+```shell
+./start.py -n
+```
+とする事で、HTMLを更新することができます。
 
 ## 使い方
 
