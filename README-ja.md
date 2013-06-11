@@ -113,6 +113,12 @@ file:///home/yourname/[path.outputdir]/articles.html
 ```
 を開けば論文のリストが閲覧できます。
 
+.bibファイルをアップデートした後、
+```shell
+./start.py -n
+```
+とする事で、HTMLを更新することができます。
+
 ## 使い方
 
 ### PDFへのリンク
