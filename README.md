@@ -75,7 +75,7 @@ Before install this program, please install pybtex and jinja2.
 
 At first, please get the source code of this project:
 ```shell
-git clone http://github.com/termoshtt/ariticles.git
+git clone git://github.com/termoshtt/ariticles.git
 ```
 or please download .zip and extract.
 Next go into the directory and copy the configure file to your $HOME:

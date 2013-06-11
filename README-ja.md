@@ -74,7 +74,7 @@ easy_install pybtex
 インストール作業を始める前にjinja2,pybtexをインストールしておいて下さい。
 まずソースコードを取得します。
 ```shell
-git clone http://github.com/termoshtt/ariticles.git
+git clone git://github.com/termoshtt/ariticles.git
 ```
 あるいは.zipをダウンロードし展開してください。
 次にダウンロードしたディレクトリに移動し、
