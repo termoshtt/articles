@@ -29,7 +29,17 @@ you can complement a BibTeX key from this project.
 If you are not using BibTeX now,
 you can get BibTeX informations from PDFs automatically.
 
-In this version this application is developed on Fedora17 and Mac OS X 10.8.
+In summary, you can do without server:
++ generate static HTML file
++ article search (title,journal,author,date)
++ auto-generate .bib file (from command line, see below)
++ BibTeX-key complement in your editor(vim,emacs)
+and you can do with server:
++ tagging/untagging article
++ register BibTeX information through WebApp
++ update HTML from WebApp
+
+In this version this application is developed on Fedora18 and Mac OS X 10.8.
 
 ## Install
 
