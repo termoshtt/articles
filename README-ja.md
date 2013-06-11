@@ -50,9 +50,9 @@ jinja2はパッケージ管理アプリケーション(yum,apt等)によって
 導入できるでしょう。
 しかしpybtexはあまりメジャーではないので、
 見つからない事があるでしょう。
-幸運にもpybtexではeasy-installによってインストールする事が可能です。
+幸運にもpybtexではeasy\_installによってインストールする事が可能です。
 ```shell
-easy-install pybtex
+easy_install pybtex
 ```
 (通常、管理者権限が必要です)
 もしBibTeXキーの自動取得機能を使用する場合、

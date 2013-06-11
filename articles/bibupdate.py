@@ -25,7 +25,7 @@ def extractDOI(pdfs,logf=sys.stdout):
 
 def update(g_cfg, silent=True):
     """
-    search pdf without bibfile and add bibfile to bib_file specified by config file
+    search pdf without bibfile and add bibfile to bib_file specified by configure file
     """
     import os
     pdf_path = os.path.join(g_cfg["output"], u"pdf")
@@ -34,7 +34,7 @@ def update(g_cfg, silent=True):
     if nobib_pdfs != [] and not silent:
         for pdf in nobib_pdfs:
             print(pdf)
-        print("Above files are pdfs without bibtex infomation.")
+        print("Above files are pdfs without bibtex information.")
         update = raw_input("Do you try to get bibtex files? [y/n]: ")
         if update != "y":
             print "Did not updated bibfile."

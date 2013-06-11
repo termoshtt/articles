@@ -50,9 +50,9 @@ and depends on the following libraries.
 For famous distribution of Linux, at least on Fedora,
 jinja2 can be found in the package manager (yum,apt,..).
 However, pybtex might not be found, so you have to install it manually.
-Fortunately, pybtex can be installed by easy-install
+Fortunately, pybtex can be installed by easy\_install
 ```shell
-easy-install pybtex
+easy_install pybtex
 ```
 (usually root authorization is needed.)
 If you use --getbib (-b) option,
