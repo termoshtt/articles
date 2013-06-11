@@ -40,7 +40,7 @@ And you can do with server:
 + register BibTeX information through WebApp
 + update HTML from WebApp
 
-In this version this application is developed on Fedora18 and Mac OS X 10.8.
+In this version this application is developed on Fedora18 and OS X(10.8).
 
 ## Install
 
