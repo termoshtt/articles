@@ -31,6 +31,7 @@ def start_CGI_server(config):
     httpd.serve_forever()
 
 import os.path
+import sys
 from optparse import OptionParser
 from articles import bib2html,configure,bibupdate
 def main():
@@ -51,8 +52,14 @@ def main():
     config_file = os.path.expanduser(option.config)
     if not os.path.exists(config_file):
         print("configure file does not exists : " + config_file)
-        return -1
-    config = configure.read(config_file)
+        sys.exit(1)
+
+    try:
+        config = configure.read(config_file)
+    except UserWarning as e:
+        print("\nERROR : configure file is invalid.")
+        print e
+        sys.exit(1)
 
     if option.getbib:
         bibupdate.update(config,silent=False)
