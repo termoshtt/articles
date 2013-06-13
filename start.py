@@ -18,9 +18,6 @@ def copy_attachment(config):
             with open(os.path.join(dest_path,jquery_filename),"w") as f:
                 f.write(urllib2.urlopen(jquery_url).read())
 
-def install_check(config):
-    pass
-
 import pickle
 import BaseHTTPServer
 import CGIHTTPServer
@@ -63,7 +60,6 @@ def main():
 
     bib2html.generate(config)
     if option.install:
-        install_check(config)
         copy_attachment(config)
         return
 
