@@ -19,6 +19,8 @@ def _read_path(parser,dest,create=None):
                 os.makedirs(path)
             print("successfully created : %s" % (path,))
             return path
+        else:
+            print("Please create by yourself.")
     raise UserWarning("invalid configure : path does not found (destination = %s, value = %s)" % (dest,path))
 
 import ConfigParser
