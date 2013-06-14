@@ -25,11 +25,19 @@ class Response(object):
     save Response and Header
     """
 
-    def __init__(self,charset='utf-8'):
-        self.headers={'Content-type':'text/html;charset=%s' % charset}
-        self.body=""
+    def __init__(self,content_type="html",charset='utf-8'):
+        if content_type == "html":
+            self.headers={'Content-type':'text/html;charset=%s' % charset}
+        elif content_type == "json":
+            self.headers={'Content-type':'application/json; charset=%s' % charset}
+        elif content_type == "xml":
+            self.headers={'Content-type':'text/xml; charset=%s' % charset}
+            # self.headers={'Content-type':'application/xml; charset=%s' % charset}
+        else:
+            raise RuntimeError("invalid content_type : please choose from {html,json,xml}")
         self.status=200
-        self.status_message=''
+        self.status_message='success'
+        self.body=""
 
     def set_header(self, name, value):
         """set header of Response"""
