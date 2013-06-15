@@ -11,11 +11,7 @@ import CGIHTTPServer
 from daemon import DaemonContext
 from daemon.pidfile import PIDLockFile
 
-import articles.configure
-
-def update(cfg):
-    """update [server root]/index.html"""
-    pass
+from articles import configure,bib2html
 
 def start(cfg,pid_filename = "/tmp/articles.pid"):
     """start articles daemon"""
@@ -28,7 +24,7 @@ def start(cfg,pid_filename = "/tmp/articles.pid"):
                 working_directory = s_root,
             )
         with dc:
-            pickle.dump(cfg,open(articles.configure.configure_cache_fn,'wb'))
+            pickle.dump(cfg,open(configure.configure_cache_fn,'wb'))
             server = BaseHTTPServer.HTTPServer
             handler = CGIHTTPServer.CGIHTTPRequestHandler
             addr = ("",cfg["port"])
@@ -55,7 +51,7 @@ def main():
             default="~/.articles.ini",
             help="specify configure file")
     sub_psr = parser.add_subparsers()
-    sub_psr.add_parser("update",help="update [server root]/index.html").set_defaults(func=update)
+    sub_psr.add_parser("update",help="update [server root]/index.html").set_defaults(func=bib2html.generate)
     sub_psr.add_parser("start",help="start articles daemon").set_defaults(func=start)
     sub_psr.add_parser("kill",help="kill articles server").set_defaults(func=kill)
     args = parser.parse_args()
@@ -64,7 +60,7 @@ def main():
     if not os.path.exists(cfg_fn):
         print("configure file does not found")
         sys.exit(1)
-    cfg = articles.configure.read(cfg_fn)
+    cfg = configure.read(cfg_fn)
     args.func(cfg)
 
 if __name__ == "__main__":
