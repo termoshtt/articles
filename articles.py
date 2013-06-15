@@ -11,7 +11,31 @@ def update(cfg):
 
 def start(cfg):
     """start articles daemon"""
-    pass
+    import pickle
+    import BaseHTTPServer
+    import CGIHTTPServer
+    from daemon import DaemonContext
+    from daemon.pidfile import PIDLockFile
+    home = cfg["server_home"]
+    pid_filename = "/tmp/articles.pid"
+    log_path = os.path.join(home,"server.log")
+    if not os.path.exists(pid_filename):
+        dc = DaemonContext(
+                pidfile = PIDLockFile(pid_filename),
+                stderr = open(log_path,"w+"),
+                working_directory = home,
+            )
+        with dc:
+            pickle.dump(cfg,open(".config.pickle",'wb'))
+            server = BaseHTTPServer.HTTPServer
+            handler = CGIHTTPServer.CGIHTTPRequestHandler
+            addr = ("",cfg["port"])
+            # handler.cgi_directories = [""]
+            httpd = server(addr,handler)
+            httpd.serve_forever()
+    else:
+        print("already running")
+        sys.exit(1)
 
 def kill(cfg):
     """kill articles server"""
