@@ -1,6 +1,18 @@
 #!/usr/bin/python
 # coding=utf-8
 
+import os
+import os.path
+import sys
+import argparse
+import pickle
+import BaseHTTPServer
+import CGIHTTPServer
+from daemon import DaemonContext
+from daemon.pidfile import PIDLockFile
+
+import articles.configure
+
 def install(cfg):
     """install necessaries"""
     pass
@@ -9,16 +21,9 @@ def update(cfg):
     """update [server root]/index.html"""
     pass
 
-def start(cfg):
+def start(cfg,pid_filename = "/tmp/articles.pid"):
     """start articles daemon"""
-    import pickle
-    import BaseHTTPServer
-    import CGIHTTPServer
-    from daemon import DaemonContext
-    from daemon.pidfile import PIDLockFile
-    from articles.configure.configure_cache_fn
     s_root = cfg["root"]
-    pid_filename = "/tmp/articles.pid"
     log_path = os.path.join(s_root,"server.log") # not secure
     if not os.path.exists(pid_filename):
         dc = DaemonContext(
@@ -27,7 +32,7 @@ def start(cfg):
                 working_directory = s_root,
             )
         with dc:
-            pickle.dump(cfg,open(configure_cache_fn,'wb'))
+            pickle.dump(cfg,open(articles.configure.configure_cache_fn,'wb'))
             server = BaseHTTPServer.HTTPServer
             handler = CGIHTTPServer.CGIHTTPRequestHandler
             addr = ("",cfg["port"])
@@ -38,14 +43,15 @@ def start(cfg):
         print("already running")
         sys.exit(1)
 
-def kill(cfg):
+def kill(cfg,pid_filename = "/tmp/articles.pid"):
     """kill articles server"""
-    pass
+    if not os.path.exists(pid_filename):
+        print("no server is running (or cannot found pid rock file)")
+        sys.exit(1)
+    pid = int(open(pid_filename,'r').read())
+    os.kill(pid,9)
+    os.remove(pid_filename)
 
-import os.path
-import sys
-import argparse
-import articles.configure
 def main():
     parser = argparse.ArgumentParser(description="article manager based on BibTeX")
     parser.add_argument("-c","--configure",
