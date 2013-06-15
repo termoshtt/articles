@@ -13,10 +13,6 @@ from daemon.pidfile import PIDLockFile
 
 import articles.configure
 
-def install(cfg):
-    """install necessaries"""
-    pass
-
 def update(cfg):
     """update [server root]/index.html"""
     pass
@@ -59,7 +55,6 @@ def main():
             default="~/.articles.ini",
             help="specify configure file")
     sub_psr = parser.add_subparsers()
-    sub_psr.add_parser("install",help="install necessaries").set_defaults(func=install)
     sub_psr.add_parser("update",help="update [server root]/index.html").set_defaults(func=update)
     sub_psr.add_parser("start",help="start articles daemon").set_defaults(func=start)
     sub_psr.add_parser("kill",help="kill articles server").set_defaults(func=kill)
