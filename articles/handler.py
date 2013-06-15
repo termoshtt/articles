@@ -65,3 +65,19 @@ class Response(object):
         """convert Request into text"""
         return self.make_output()
 
+def operation_success():
+    res = Response("json")
+    res.set_body(u"""
+    {"exit_code" : 0}
+    """)
+    print(res)
+
+def operation_fail(msg="",code=1):
+    res = Response("json")
+    res.status = 500
+    res.status_message = "internal server error"
+    res.set_body("""
+    {"exit_code" : %d, "message" : "%s" }
+    """ % (code,msg))
+    print(res)
+
