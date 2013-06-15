@@ -16,17 +16,18 @@ def start(cfg):
     import CGIHTTPServer
     from daemon import DaemonContext
     from daemon.pidfile import PIDLockFile
-    home = cfg["server_home"]
+    from articles.configure.configure_cache_fn
+    s_root = cfg["root"]
     pid_filename = "/tmp/articles.pid"
-    log_path = os.path.join(home,"server.log")
+    log_path = os.path.join(s_root,"server.log") # not secure
     if not os.path.exists(pid_filename):
         dc = DaemonContext(
                 pidfile = PIDLockFile(pid_filename),
                 stderr = open(log_path,"w+"),
-                working_directory = home,
+                working_directory = s_root,
             )
         with dc:
-            pickle.dump(cfg,open(".config.pickle",'wb'))
+            pickle.dump(cfg,open(configure_cache_fn,'wb'))
             server = BaseHTTPServer.HTTPServer
             handler = CGIHTTPServer.CGIHTTPRequestHandler
             addr = ("",cfg["port"])
