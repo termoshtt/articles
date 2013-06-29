@@ -23,6 +23,18 @@ def _read_path(parser,dest,create=None):
             print("Please create by yourself.")
     raise UserWarning("invalid configure : path does not found (destination = %s, value = %s)" % (dest,path))
 
+def _read_address(parser,dest):
+    import os.path
+    val = parser.get("path",dest)
+    if val[:7] in ["http://","file://"]:
+        # TODO check
+        return val
+    else: # regard as local file path
+        path = os.path.expanduser(val)
+        if not os.path.isdir(path):
+            raise UserWarning("invalid configure : path does not found (destination = %s, value = %s)" % (dest,path))
+        return "file://" + path
+
 def read(cfg_path):
     import ConfigParser
     parser = ConfigParser.SafeConfigParser()
@@ -33,6 +45,7 @@ def read(cfg_path):
     config["template"] = _read_path(parser,"template")
     config["port"]     = int(parser.get("server","port"))
     config["address"]  = parser.get("server","address")
+    config["pdf"]      = _read_address(parser,"pdf")
     config["index_html"] = "index.html"
     config["database"] = "articles.db"
     return config
