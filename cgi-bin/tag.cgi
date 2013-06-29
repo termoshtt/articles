@@ -65,13 +65,13 @@ def main():
     if "TagAction" not in req.form:
         with open(configure.log_fn,"a+") as logf:
             logf.write("(WW) TagAction is not found in cgi.form")
-        handler.operation_fails("TagAction is not set")
+        handler.operation_fail("TagAction is not set")
         sys.exit(1)
     action_type = req.form["TagAction"].value
     if action_type not in action:
         with open(configure.log_fn,"a+") as logf:
             logf.write("(WW) TagAction is not implimented")
-        handler.operation_fails("invalid TagAction")
+        handler.operation_fail("invalid TagAction")
         sys.exit(1)
     try:
         action[action_type](req.form)
@@ -79,13 +79,13 @@ def main():
         with open(configure.log_fn,"a+") as logf:
             logf.write("(WW) catch warning while TagAction:")
             logf.write(str(e))
-        handler.operation_fails("internal server error")
+        handler.operation_fail("internal server error : " + str(e))
         sys.exit(1)
     except Exception,e:
         with open(configure.log_fn,"a+") as logf:
             logf.write("(EE) error occured in TagAction:")
             logf.write(str(e))
-        handler.operation_fails("internal server error")
+        handler.operation_fail("internal server error : " + str(e))
         sys.exit(1)
 
 if __name__ == "__main__":
