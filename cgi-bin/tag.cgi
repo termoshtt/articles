@@ -17,6 +17,7 @@ def CreateTag(form):
     adb.create_tag(tag_name)
     adb.commit()
     bib2html.generate(g_cfg)
+    handler.operation_success()
 
 def DeleteTag(form):
     tag_name = form["TagName"].value
@@ -26,6 +27,7 @@ def DeleteTag(form):
     adb.delete_tag(tag_name)
     adb.commit()
     bib2html.generate(g_cfg)
+    handler.operation_success()
 
 def Tagging(form):
     tag_name = form["TagName"].value
@@ -36,6 +38,7 @@ def Tagging(form):
     adb.tagging(bib_key,tag_name)
     adb.commit()
     bib2html.generate(g_cfg)
+    handler.operation_success()
 
 def unTagging(form):
     tag_name = form["TagName"].value
@@ -46,6 +49,7 @@ def unTagging(form):
     adb.untagging(bib_key,tag_name)
     adb.commit()
     bib2html.generate(g_cfg)
+    handler.operation_success()
 
 action = {
         "CreateTag" : CreateTag,
@@ -61,24 +65,28 @@ def main():
     if "TagAction" not in req.form:
         with open(configure.log_fn,"a+") as logf:
             logf.write("(WW) TagAction is not found in cgi.form")
-        return 1
+        handler.operation_fails("TagAction is not set")
+        sys.exit(1)
     action_type = req.form["TagAction"].value
     if action_type not in action:
         with open(configure.log_fn,"a+") as logf:
             logf.write("(WW) TagAction is not implimented")
-        return 1
+        handler.operation_fails("invalid TagAction")
+        sys.exit(1)
     try:
         action[action_type](req.form)
     except Warning,e:
         with open(configure.log_fn,"a+") as logf:
             logf.write("(WW) catch warning while TagAction:")
             logf.write(str(e))
-        return 1
+        handler.operation_fails("internal server error")
+        sys.exit(1)
     except Exception,e:
         with open(configure.log_fn,"a+") as logf:
             logf.write("(EE) error occured in TagAction:")
             logf.write(str(e))
-        return 1
+        handler.operation_fails("internal server error")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
