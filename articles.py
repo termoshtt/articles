@@ -44,6 +44,27 @@ def kill(cfg,pid_filename = "/tmp/articles.pid"):
     os.kill(pid,9)
     os.remove(pid_filename)
 
+def print_entries(cfg,comma=u", "):
+    entries = bib2html.read_bibtex(cfg)
+    def _get_entry(e,key):
+        if key in e:
+            return e[key]
+        else:
+            return ""
+    for entry in entries:
+        bibkey  = _get_entry(entry,u"key")
+        title   = _get_entry(entry,u"title")
+        journal = _get_entry(entry,u"journal")
+        year    = _get_entry(entry,u"year")
+        author  = _get_entry(entry,u"author")
+        tags    = _get_entry(entry,u"tags")
+
+        description = author+comma+journal+comma+year+comma+title
+        if tags:
+            description = description + comma + " ".join(tags)
+        output = bibkey + comma + description
+        print(output.encode("utf-8"))
+
 def main():
     parser = argparse.ArgumentParser(description="article manager based on BibTeX")
     parser.add_argument("-c","--configure",
@@ -54,6 +75,7 @@ def main():
     sub_psr.add_parser("update",help="update [server root]/index.html").set_defaults(func=bib2html.generate)
     sub_psr.add_parser("start",help="start articles daemon").set_defaults(func=start)
     sub_psr.add_parser("kill",help="kill articles server").set_defaults(func=kill)
+    sub_psr.add_parser("entries",help="print managed entries").set_defaults(func=print_entries)
     args = parser.parse_args()
 
     cfg_fn  = os.path.expanduser(args.configure_filename)
