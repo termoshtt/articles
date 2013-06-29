@@ -23,14 +23,17 @@ def extractDOI(pdfs,logf=sys.stdout):
             logf.write(string)
     return dic
 
-def update(g_cfg, silent=True):
+def update(g_cfg, silent=False):
     """
     search pdf without bibfile and add bibfile to bib_file specified by configure file
     """
     import os
-    pdf_path = os.path.join(g_cfg["output"], u"pdf")
+    pdf_addr = g_cfg["pdf"]
+    if pdf_addr[:7] != "file://":
+        raise UserWarning("only file:// type address is enable in this version")
+    pdf_dir = pdf_addr[7:]
 
-    nobib_pdfs = check_bib(g_cfg)
+    nobib_pdfs = check_bib(g_cfg,pdf_dir)
     if nobib_pdfs != [] and not silent:
         for pdf in nobib_pdfs:
             print(pdf)
@@ -43,9 +46,8 @@ def update(g_cfg, silent=True):
             print "Try to updated bibfile."
 
     dois = extractDOI(nobib_pdfs)
-    bibstr = u""
     for pdfname in dois.keys():
-        oldpdf = os.path.join(pdf_path, pdfname)
+        oldpdf = os.path.join(pdf_dir, pdfname)
         if not silent:
             print(oldpdf + "'s bibfile is update")
         try:
@@ -59,12 +61,12 @@ def update(g_cfg, silent=True):
             print(e)
             print("skip this pdf")
             continue
-        newpdf = os.path.join(pdf_path, bibkey + u".pdf")
+        newpdf = os.path.join(pdf_dir, bibkey + u".pdf")
         if not silent:
             print("%s is renamed to %s" % (oldpdf.encode("utf-8"), newpdf.encode("utf-8")))
         os.rename(oldpdf, newpdf)
         try:
-            bibio.add(bibstr,g_cfg[u"bib_file"])
+            bibio.add(bibstr,g_cfg["bib"])
         except Exception,e:
             print("Unknown error occurs while writing bib info into file")
             print(e)
@@ -72,7 +74,7 @@ def update(g_cfg, silent=True):
             continue
     return
 
-def check_bib(g_cfg):
+def check_bib(g_cfg,pdf_dir):
     """
     search pdf file without bibfile
     """
@@ -80,12 +82,11 @@ def check_bib(g_cfg):
     def ext_key(pdfpath):
         return os.path.splitext(os.path.basename(pdfpath))[0]
     nobib_list = []
-    pdf_path = os.path.join(g_cfg[u"output"], u"pdf")
-    pdfkeys = [ext_key(pdf) for pdf in list(glob.glob(os.path.join(pdf_path, u"*pdf")))]
-    bibdb =  bibio.read_file(g_cfg[u"bib_file"])
+    pdfkeys = [ext_key(pdf) for pdf in list(glob.glob(os.path.join(pdf_dir, u"*pdf")))]
+    bibdb =  bibio.read_file(g_cfg[u"bib"])
     bibkeys = bibdb.entries.keys()
     for pdfkey in pdfkeys:
         if not pdfkey in bibkeys:
             nobib_list.append(pdfkey)
-    return [os.path.join(pdf_path, pdfkey + u".pdf") for pdfkey in nobib_list]
+    return [os.path.join(pdf_dir, pdfkey + u".pdf") for pdfkey in nobib_list]
 

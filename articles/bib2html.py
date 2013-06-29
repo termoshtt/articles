@@ -3,8 +3,8 @@
 
 import dbio,bibio
 def read_bibtex(g_cfg):
-    bib_filename = g_cfg["bib_file"]
-    db_filename = g_cfg["db_file"]
+    bib_filename = g_cfg["bib"]
+    db_filename = g_cfg["database"]
     bib_data = bibio.read_file(bib_filename)
     entries = []
     art_db = dbio.articles_db(db_filename)
@@ -38,8 +38,8 @@ def read_bibtex(g_cfg):
 
 from jinja2 import Template
 def convert(g_cfg):
-    db_filename = g_cfg["db_file"]
-    template_filename = g_cfg["template_file"]
+    db_filename = g_cfg["database"]
+    template_filename = g_cfg["template"]
     entries = read_bibtex(g_cfg)
     art_db = dbio.articles_db(db_filename)
 
@@ -57,8 +57,6 @@ def convert(g_cfg):
 
 import os
 def generate(config):
-    if not os.path.isdir(config["output"]):
-        os.mkdir(config["output"])
-    html_path = os.path.join(config["output"],config["html_file"])
+    html_path = os.path.join(config["root"],config["index_html"])
     with open(html_path,'w') as f:
         f.write(convert(config))

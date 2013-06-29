@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-import os.path
 def _read_path(parser,dest,create=None):
+    import os.path
     path = os.path.expanduser(parser.get("path",dest))
     if os.path.exists(path):
         return path
@@ -23,17 +23,32 @@ def _read_path(parser,dest,create=None):
             print("Please create by yourself.")
     raise UserWarning("invalid configure : path does not found (destination = %s, value = %s)" % (dest,path))
 
-import ConfigParser
-def read(filename):
+def _read_address(parser,dest):
+    import os.path
+    val = parser.get("path",dest)
+    if val[:7] in ["http://","file://"]:
+        # TODO check
+        return val
+    else: # regard as local file path
+        path = os.path.expanduser(val)
+        if not os.path.isdir(path):
+            raise UserWarning("invalid configure : path does not found (destination = %s, value = %s)" % (dest,path))
+        return "file://" + path
+
+def read(cfg_path):
+    import ConfigParser
     parser = ConfigParser.SafeConfigParser()
-    parser.read(filename)
+    parser.read(cfg_path)
     config = {}
-    config["output"]        = _read_path(parser,"output_dir",create="directory")
-    config["bib_file"]      = _read_path(parser,"bib",create="file")
-    config["template_file"] = parser.get("name","template")
-    config["html_file"]     = parser.get("name","html")
-    config["port"]          = int(parser.get("server","port"))
-    config["address"]       = parser.get("server","address")
-    config["db_file"]       = os.path.join(config["output"],parser.get("name","database"))
-    config["logfile"]       = parser.get("name","logfile")
+    config["root"]     = _read_path(parser,"root",create="directory")
+    config["bib"]      = _read_path(parser,"bib",create="file")
+    config["template"] = _read_path(parser,"template")
+    config["port"]     = int(parser.get("server","port"))
+    config["address"]  = parser.get("server","address")
+    config["pdf"]      = _read_address(parser,"pdf")
+    config["index_html"] = "index.html"
+    config["database"] = "articles.db"
     return config
+
+cache_fn = ".config.pickle"
+log_fn = "server.log"
