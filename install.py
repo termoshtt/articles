@@ -18,6 +18,14 @@ def copy_attachment(config):
             with open(os.path.join(dest_path,jquery_filename),"w") as f:
                 f.write(urllib2.urlopen(jquery_url).read())
 
+    lib_path = os.path.join(config["root"],"cgi-bin/articles")
+    if not os.path.exists(lib_path):
+        os.mkdir(lib_path)
+    for py in os.listdir("articles"):
+        src_path = os.path.join("articles",py)
+        dest_path = os.path.join(lib_path,py)
+        shutil.copy2(src_path,dest_path)
+
 import os.path
 import sys
 import argparse
