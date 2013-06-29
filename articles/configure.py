@@ -37,4 +37,5 @@ def read(cfg_path):
     config["database"] = "articles.db"
     return config
 
-configure_cache_fn = ".config.pickle"
+cache_fn = ".config.pickle"
+log_fn = "server.log"

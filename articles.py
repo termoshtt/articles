@@ -24,7 +24,7 @@ def start(cfg,pid_filename = "/tmp/articles.pid"):
                 working_directory = s_root,
             )
         with dc:
-            pickle.dump(cfg,open(configure.configure_cache_fn,'wb'))
+            pickle.dump(cfg,open(configure.cache_fn,'wb'))
             server = BaseHTTPServer.HTTPServer
             handler = CGIHTTPServer.CGIHTTPRequestHandler
             addr = ("",cfg["port"])
