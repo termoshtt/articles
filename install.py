@@ -8,7 +8,7 @@ def copy_attachment(config):
     jquery_filename = "jquery-1.8.2.js"
     jquery_url = "http://code.jquery.com/" + jquery_filename
     for att in attachments:
-        dest_path = os.path.join(config["output"],att)
+        dest_path = os.path.join(config["root"],att)
         if not os.path.isdir(dest_path):
             os.mkdir(dest_path)
         for src in os.listdir(att):
@@ -20,22 +20,24 @@ def copy_attachment(config):
 
 import os.path
 import sys
+import argparse
 from articles import bib2html,configure,bibupdate
 def main():
-    parser = argparse.ArgumentParser(description="article manager based on BibTeX")
+    parser = argparse.ArgumentParser(description="an installer of articles")
     parser.add_argument("-c","--configure",
             dest="configure_filename",
             default="~/.articles.ini",
             help="specify configure file")
+    args = parser.parse_args()
 
     cfg_fn  = os.path.expanduser(args.configure_filename)
     if not os.path.exists(cfg_fn):
         print("configure file does not found")
         sys.exit(1)
-    cfg = articles.configure.read(cfg_fn)
+    cfg = configure.read(cfg_fn)
 
-    bib2html.generate(config)
-    copy_attachment(config)
+    bib2html.generate(cfg)
+    copy_attachment(cfg)
 
 if __name__ == "__main__":
     main()
