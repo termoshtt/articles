@@ -13,7 +13,7 @@ def CreateTag(form):
     tag_name = form["TagName"].value
     with open(configure.cache_fn,"rb") as g_cfg_f:
         g_cfg = pickle.load(g_cfg_f)
-    adb = dbio.articles_db(g_cfg["db_file"])
+    adb = dbio.articles_db(g_cfg["database"])
     adb.create_tag(tag_name)
     adb.commit()
     bib2html.generate(g_cfg)
@@ -23,7 +23,7 @@ def DeleteTag(form):
     tag_name = form["TagName"].value
     with open(configure.cache_fn,"rb") as g_cfg_f:
         g_cfg = pickle.load(g_cfg_f)
-    adb = dbio.articles_db(g_cfg["db_file"])
+    adb = dbio.articles_db(g_cfg["database"])
     adb.delete_tag(tag_name)
     adb.commit()
     bib2html.generate(g_cfg)
@@ -34,7 +34,7 @@ def Tagging(form):
     bib_key = form["BibTeXKey"].value
     with open(configure.cache_fn,"rb") as g_cfg_f:
         g_cfg = pickle.load(g_cfg_f)
-    adb = dbio.articles_db(g_cfg["db_file"])
+    adb = dbio.articles_db(g_cfg["database"])
     adb.tagging(bib_key,tag_name)
     adb.commit()
     bib2html.generate(g_cfg)
@@ -45,7 +45,7 @@ def unTagging(form):
     bib_key = form["BibTeXKey"].value
     with open(configure.cache_fn,"rb") as g_cfg_f:
         g_cfg = pickle.load(g_cfg_f)
-    adb = dbio.articles_db(g_cfg["db_file"])
+    adb = dbio.articles_db(g_cfg["database"])
     adb.untagging(bib_key,tag_name)
     adb.commit()
     bib2html.generate(g_cfg)
