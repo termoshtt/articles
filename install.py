@@ -4,7 +4,7 @@
 import shutil
 import urllib2
 def copy_attachment(config):
-    attachments = ["js","css","icons"]
+    attachments = ["js","css","icons","cgi-bin"]
     jquery_filename = "jquery-1.8.2.js"
     jquery_url = "http://code.jquery.com/" + jquery_filename
     for att in attachments:
