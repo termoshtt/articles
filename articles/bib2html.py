@@ -48,6 +48,7 @@ def convert(g_cfg):
         u'title'   : u'Articles',
         u'tags'    : art_db.tags(),
         u'entries' : entries,
+        u'pdf_dir' : g_cfg["pdf"],
         u'address' : g_cfg["address"],
         u'port'    : g_cfg["port"],
         })
