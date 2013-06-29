@@ -33,6 +33,8 @@ def read(cfg_path):
     config["template"] = _read_path(parser,"template")
     config["port"]     = int(parser.get("server","port"))
     config["address"]  = parser.get("server","address")
+    config["index_html"] = "index.html"
+    config["database"] = "articles.db"
     return config
 
 configure_cache_fn = ".config.pickle"
