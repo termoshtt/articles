@@ -60,7 +60,7 @@
         {% for entry in entries %}
         <div id='{{entry["key"]}}' class="Article">
             <img class="TagImg" src="./icons/tag.png" height="20px"/>
-            <a class="ArticleLink" href='./pdf/{{entry["key"]}}.pdf'>{{entry["title"]}}</a>
+            <a class="ArticleLink" href='{{pdf_dir}}{{entry["key"]}}.pdf'>{{entry["title"]}}</a>
             <ul>
                 <li>Author : {{entry["author"]}}</li>
                 <li>Journal: {{entry["journal"]}}</li>
