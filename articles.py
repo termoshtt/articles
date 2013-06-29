@@ -11,7 +11,7 @@ import CGIHTTPServer
 from daemon import DaemonContext
 from daemon.pidfile import PIDLockFile
 
-from articles import configure,bib2html
+from articles import configure,bib2html,bibupdate
 
 def start(cfg,pid_filename = "/tmp/articles.pid"):
     """start articles daemon"""
@@ -76,6 +76,7 @@ def main():
     sub_psr.add_parser("start",help="start articles daemon").set_defaults(func=start)
     sub_psr.add_parser("kill",help="kill articles server").set_defaults(func=kill)
     sub_psr.add_parser("entries",help="print managed entries").set_defaults(func=print_entries)
+    sub_psr.add_parser("getbib",help="get BibTeX infomations from dx.doi.org").set_defaults(func=bibupdate.update)
     args = parser.parse_args()
 
     cfg_fn  = os.path.expanduser(args.configure_filename)
